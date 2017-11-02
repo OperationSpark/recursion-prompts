@@ -412,16 +412,12 @@ var replaceKeysInObj = function (obj, key, newKey) {
     }
     for(let k in obj){
         if(typeof obj[k] === 'object'){
-             obj[k] = replaceKeysInObj(obj[k], key, newKey);
+            obj[k] = replaceKeysInObj(obj[k], key, newKey);
             
         }
     }
-    console.log(obj)
     return obj;
 };
-
-var input = { 'e': { 'x': 'y' }, 't': { 'r': { 'e': 'r' }, 'p': { 'y': 'r' } }, 'y': 'e' };
-console.log(replaceKeysInObj(input, 'e', 'f'));
 
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
 // number is the sum of the previous two.
@@ -640,11 +636,32 @@ var tagCount = function(tag, node) {
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function (array, target, min, max) {
+var binarySearch = function (array, target, min, max, i = 0) {
+    if(i === array.length){
+        return null;
+    }else if(array[i] === target){
+        return i;
+    }
+    i++;
+    return binarySearch(array, target, min, max, i);
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function (array) {
+var mergeSort = function (array, i = 0, j = 0, result = [], copy = array.slice(0), smallest, smallestIndex = 0) {
+    if(j === array.length){
+        return result;
+    }
+    smallest = 10000000;
+    for(let i = 0; i < copy.length; i++){
+        if(copy[i] < smallest){
+            smallest = copy[i];
+            smallestIndex = i;
+        }
+    }
+    result.push(smallest);
+    copy.splice(smallestIndex, 1);
+    j++;
+    return mergeSort(array, i, j, result, copy, smallest, smallestIndex)
 };
