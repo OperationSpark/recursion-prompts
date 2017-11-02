@@ -624,13 +624,16 @@ var numToText = function (str, i = 0, arr = str.split('')) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
-    
+var tagCount = function(tag, node = document.body, children = node.childNodes, i = 0, counter = 0) {
+    if(i === children.length){
+        return counter;
+    }
+    if(children[i].nodeName.toLowerCase() === tag){
+        counter++;
+    }
+    i++
+    return tagCount(tag, node, children, i, counter);
 }
-
-// var tagCount = function (tag, node) {
-//     return document.getElementsByTagName(tag).length;
-// };
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
