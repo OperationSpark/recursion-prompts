@@ -600,7 +600,25 @@ var numToText = function(str) {
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node) {
-    
+    if (!node) {
+        node = this.document.body;
+    }
+    let count = 0;
+    // console.log(node.childNodes);
+    if (node.nodeName.toLowerCase() === tag) {
+        count++;
+    }
+    // let kidz = node.getElementsByTagName(tag);
+    // for (let i = 0; i < kidz.length; i++) {
+    //     console.log(kidz[i].nodeName);
+    // }
+    let children = node.childNodes;
+    for (let i = 0; i < children.length; i++) {
+        // console.log(children[i].nodeName);
+        count += tagCount(tag, children[i]);
+    }
+    return count;
+
 };
 
 // 37. Write a function for binary search.
@@ -608,10 +626,56 @@ var tagCount = function(tag, node) {
 // console.log(binarySearch(5)) will return '5'
 
 var binarySearch = function(array, target, min, max) {
+    // debugger;
+    if (min > max) {
+        return null;
+    }
+    if (max === undefined) {
+        max = array.length - 1;
+    }
+    if (min === undefined) {
+        min = 0;
+    }
+    let i = Math.floor((min + max) / 2);
+    if (array[i] === target) {
+        return i;
+    }
+    if (array[i] > target) {
+        max = i-1;  
+    } 
+    if (array[i] < target) {
+        min = i+1;
+    }
+    return binarySearch(array, target, min, max);
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
 var mergeSort = function(array) {
+    if (array.length < 2) {
+        return array;
+    }
+    let left = array.slice(0, array.length/2);
+    let right = array.slice(array.length/2);
+    left = mergeSort(left);
+    right = mergeSort(right);
+    let res = [];
+    while (left.length > 0 && right.length > 0) {
+        if (left[0] <= right[0]) {
+            res.push(left[0]);
+            left.shift();
+        } else {
+            res.push(right[0]);
+            right.shift();
+        }
+    }
+    if (left.length > 0) {
+        res = res.concat(left);
+    }
+    if (right.length > 0) {
+        res = res.concat(right);
+    }
+    return res;
+
 };
