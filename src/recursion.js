@@ -5,31 +5,76 @@
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
 var factorial = function(n) {
-};
+    if (n < 0) {
+        return null;
+    } else if (n === 0) {
+        return 1;
+    } else {
+        return  n *= factorial(n - 1);
+    }
+}
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array) {
-};
+var sum = array => array.length === 0 ? 0 : array[0] + sum(array.slice(1));
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+    var sum = 0;
+    array.forEach(function(e, i, a) {
+        if (Array.isArray(e)) {
+            sum += arraySum(e);
+        } else {
+            sum += e;
+        }
+    });
+    return sum;
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = function (n) {
+    if (n < 0) {
+        n = Math.abs(n);
+    }
+    if (n === 0) {
+        return true;
+    }
+    if (n === 1) {
+        return false;
+    } else {
+        n -= 2;
+        return isEven(n);
+    }
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+var sumBelow = function (n) {
+    if (n < 0) {
+        var x = n + 1;
+        return x += sumBelow(x);
+    } else if (n === 0) {
+        return n;
+    } else {
+        var y = n - 1;
+        return y += sumBelow(y);
+    }
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+var range = function (x, y) {
+    if (x - y < 2 || y - x < 2) {
+        return [];
+    }
+    if (x > y) {
+        return [x - 1].concat(range(x - 1, y));
+    }
+    if (x < y) {
+        return [x + 1].concat(range(x + 1, y));
+    }
 };
 
 // 7. Compute the exponent of a number.
@@ -37,22 +82,33 @@ var range = function(x, y) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-var exponent = function(base, exp) {
-};
+var exponent = (base, exp) => exp === 0 ? 1 : base *= exponent(base, exp - 1); 
+
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
-var powerOfTwo = function(n) {
-};
+var powerOfTwo = n => n === 1 ? true : (n < 1 ? false : powerOfTwo(n / 2));
+
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
-};
+var reverse = string => string.length <= 1 ? string : reverse(string.substr(1)) + string[0];
+
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
+var palindrome = function (string) {
+    var i = 0;
+    if (string.length <= 1) {
+        return true;
+    }
+    if (string[i] != string[string.length - 1 - i]) {
+        return false;
+    } else {
+        i++;
+        palindrome(string.substr(1, string.length - 2));
+    }
+    return true;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -65,7 +121,18 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
-var multiply = function(x, y) {
+var multiply = function (x, y) {
+    if (x === 0 || y === 0) {
+        return 0;
+    }
+    if (x === 1) {
+        return y;
+    }
+    if (y === 1) {
+        return x;
+    } else {
+        return x + multiply(x, y - 1);
+    }
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -86,9 +153,12 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
-var compareStr = function(str1, str2) {
+var compareStr = function (str1, str2) {
+    var match = false;
+    if (str1.length != str2.length) {
+        return match;
+    }
 };
-
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
