@@ -125,16 +125,46 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+    if (y === 0){
+        return NaN;
+    } else if (x <= 0 && y < 0) {
+        return x > y ? x : modulo(x - y, y);
+    } else if (x >= 0 && y > 0) {
+        return x < y ? x : modulo(x - y, y);
+    } else if (x < 0 && y > 0) {
+        return modulo(x, -y);
+    }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 var multiply = function(x, y) {
+    if (x < 0 && y < 0) {
+        x = -x;
+        y = -y;
+    }
+    if (y === 0 || x === 0) {
+        return 0;
+    }
+    return y === 1 ? x : x + multiply(x, y - 1);
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
-var divide = function(x, y) {
+var divide = function(x, y, c = 0) {
+    if (y === 0) {
+        return NaN;
+      }
+      if (x < 0 && y < 0) {
+        return divide(-x, -y);
+      }
+      if (x < 0 || y < 0) {
+        return -(divide(-x, y));
+      }
+      if (x < y) {
+        return c;
+      }
+      return divide(x - y, y, c += 1);
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -143,6 +173,18 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+    if (x <= 0 || y <= 0) {
+        return null;
+    }
+    if (x === y) {
+    return x;
+    }
+    if (x > y) {
+    return gcd(x - y, y);
+    }
+    if (x < y) {
+    return gcd(x, y - x);
+    }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -151,32 +193,51 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+    if (str1.length === 0 && str2.length === 0) {
+        return true;
+    }
+    return str1[0] !== str2[0] ? false : compareStr(str1.slice(1), str2.slice(1));
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
+    return str.length === 1 ? [str[0]] : [str[0]].concat(createArray(str.slice(1)));
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function (array) {
+    return array.length === 1 ? array : reverseArr(array.slice(1)).concat(array[0]);
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+    if (Array.isArray(value)) {
+        var result = [];
+        for (let i = 0; i < length; i++){
+            result.push(value);
+        }
+        return result;
+    }
+    return length === 1 ? [value] : buildList(value, length - 1).concat(value);
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+    if (array.length === 0) {
+        return 0;
+    } 
+    return array[0] === value ? 1 + countOccurrence(array.slice(1), value) : 0 + countOccurrence(array.slice(1), value);
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+    return array.length === 0 ? [] : [callback(array[0])].concat(rMap(array.slice(1), callback));
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
