@@ -451,16 +451,15 @@ var capitalizeFirst = function (array, newArr = [], i = 0) {
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
-var obj1 = {
-  a: 2,
-  b: {b: 2, bb: {b: 3, bb: {b: 2}}},
-  c: {c: {c: 2}, cc: 'ball', ccc: 5},
-  d: 1,
-  e: {e: {e: 2}, ee: 'car'}
-};
+// var obj1 = {
+//   a: 2,
+//   b: {b: 2, bb: {b: 3, bb: {b: 2}}},
+//   c: {c: {c: 2}, cc: 'ball', ccc: 5},
+//   d: 1,
+//   e: {e: {e: 2}, ee: 'car'}
+// };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj, sumObj={sum: 0}) {
-    debugger;
     for (var key in obj) {
         if (typeof obj[key] !== 'object' && obj[key] % 2 === 0) {
             sumObj.sum += obj[key];
@@ -469,9 +468,7 @@ var nestedEvenSum = function(obj, sumObj={sum: 0}) {
         }
     }
     return sumObj.sum;
-};
-
-nestedEvenSum(obj1);    
+};  
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
@@ -608,15 +605,35 @@ var numToText = function (str, strArr = str.split(''), i = 0) {
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node) {
-    
+    debugger;
+    return document.body.getElementsByTagName(tag).length;
 };
+tagCount('p');
 
 // 37. Write a function for binary search.
-// Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+// var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+//var input1 = [1, 2, 3, 4, 5, 6];
+// var input2 = [1, 2, 3, 4, 5, 6, 7];
+// var primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
+var binarySearch = function(array, target, min=0, max=array.length) {
+    // debugger;
+    let i = min+Math.floor((max-min)/2);
+    if (array[i] === target) {
+        return i;
+    } else if (max - min === 1) {
+        return null;
+    } else if (target < array[i]) {
+        max = i;
+        return binarySearch(array, target, min, max);
+    } else if (target > array[i]) {
+        min = i;
+        return binarySearch(array, target, min, max);
+    }
 };
+
+//binarySearch(primes, 19);
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
