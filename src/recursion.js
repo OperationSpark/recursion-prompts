@@ -668,12 +668,12 @@ var numToText = function(str, strArr=str.split(''),i=0){
 // document.body;
 // element.childNodes;
 // element.classList;
-var tagCount = function (tag, node, count = 0, i = 0, children = document.childNodes[1].children) {
+var tagCount = function (tag, node = document.body, count = 0, i = 0, children = node.childNodes) {
   // debugger;
   if(i === children.length){
-    return i;
+    return count;
   }
-  if(children[i].nodeName === tag){
+  if(children[i].nodeName.toLowerCase() === tag){
     count++
   }
   i++;
@@ -699,9 +699,32 @@ var binarySearch = function(array, target, min, max, i = 0) {
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function(array, newArr = [], i = 0) {
-  if(i === array.length){
-    return newArr;
+var mergeSort = function(array) {
+  if(array.length === 1){
+    return array;
   }
+  const middle = Math.floor(array.length / 2);
+  const left = array.slice(0, middle);
+  const right = array.slice(middle);
 
+  return merge(
+    mergeSort(left),
+    mergeSort(right)
+  )
+  function merge (left, right){
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    while(leftIndex < left.length && rightIndex < right.length){
+      if(left[leftIndex] < right[rightIndex]){
+        result.push(left[leftIndex])
+        leftIndex++
+      } else {
+        result.push(right[rightIndex])
+        rightIndex++
+      }
+    }
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+  }
 };
