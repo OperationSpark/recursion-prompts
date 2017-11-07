@@ -431,11 +431,8 @@ var numToText = function(str) {
     if (str.length === 0) {
         return '';
     }
-    for (var i = 1; i < 10; i++){
-        if (str[0] === '0'){
-            return 'zero' + numToText(str.slice(1));
-        }
-        if (str[0] == i){
+    for (var i = 0; i < 10; i++){
+        if (str[0] === i.toString()){
             return spell[i] + numToText(str.slice(1));
         }
     }
@@ -446,7 +443,14 @@ var numToText = function(str) {
 // GOOGLE AND USE -------> document.body    element.childNodes      element.classList
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
+var tagCount = function(tag, node = document.body, count = 0) {
+    node.childNodes.forEach((child) => {
+        if (child.nodeName === tag.toUpperCase()) {
+            count += 1;
+        }
+        count += tagCount(tag, child, count = 0)
+    });
+    return count;
 };
 
 // 37. Write a function for binary search.
@@ -454,10 +458,12 @@ var tagCount = function(tag, node) {
 // console.log(binarySearch(5)) will return '5'
 
 var binarySearch = function(array, target, min, max) {
+
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
 var mergeSort = function(array) {
+
 };
