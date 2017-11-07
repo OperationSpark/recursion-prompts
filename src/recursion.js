@@ -476,7 +476,16 @@ nestedEvenSum(obj1);
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(arrays) {
-    
+    var newArr = [];
+    for (var i = 0; i < arrays.length; i++) {
+        if (Array.isArray(arrays[i])) {
+            var temp = flatten(arrays[i]);
+            temp.forEach(function (value) { newArr.push(value); })
+        } else {
+            newArr.push(arrays[i]);
+        }
+    }
+    return newArr;
 };
 
 // 30. Given a string, return an object containing tallies of each letter.
@@ -514,8 +523,15 @@ var compress = function (list, results = [], i = 0) {
 // 32. Augument every element in a list with a new value where each element is an array
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
-//var augmentElements = function(array, aug) {
-//};
+var augmentElements = function(array, aug,i=0) {
+    if(i===array.length){
+        return array;
+    }else{
+        array[i].push(aug);
+        i++;
+        return augmentElements(array,aug,i);
+    }
+};
 
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
@@ -591,18 +607,19 @@ var numToText = function (str, strArr = str.split(''), i = 0) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-//var tagCount = function(tag, node) {
-//};
+var tagCount = function(tag, node) {
+    
+};
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-//var binarySearch = function(array, target, min, max) {
-//};
+var binarySearch = function(array, target, min, max) {
+};
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-//var mergeSort = function(array) {
-//};
+var mergeSort = function(array) {
+};
