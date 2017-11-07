@@ -453,12 +453,25 @@ var tagCount = function(tag, node = document.body, count = 0) {
     return count;
 };
 
-// 37. Write a function for binary search.
-// Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-// console.log(binarySearch(5)) will return '5'
+// 37. Write a function for binary search that return the index of the target in the given array or null if not found.
+// var sampleArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+// console.log(binarySearch(sampleArray, 5)) will return '5'
+// console.log(binarySearch(sampleArray, 30)) will return 'null'
 
-var binarySearch = function(array, target, min, max) {
-
+var binarySearch = function(array, target, min = 0, max = array.length) {
+    let midPoint = min + Math.floor((max - min)/2);
+    if (array[midPoint] === target) {
+        return midPoint;
+    }
+    if (midPoint >= max || midPoint === min) {
+        return null;
+    }
+    if (target < array[midPoint]) {
+        return binarySearch(array, target, min, max = midPoint);
+    }
+    if (target > array[midPoint]) {
+        return binarySearch(array, target, min = midPoint, max);
+    }
 };
 
 // 38. Write a merge sort function.
