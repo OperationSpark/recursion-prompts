@@ -9,7 +9,7 @@ var factorial = function(n) {
     else if(n < 0) return null;
     return n * factorial(n - 1);
 };
-console.log(factorial(5));
+//console.log(factorial(5));
 
 
 // 2. Compute the sum of an array of integers.
@@ -18,7 +18,7 @@ var sum = function(array) {
     if(array.length === 0) return 0;
     return array[0] + sum(array.slice(1));
 };
-console.log(sum([1,2,3,4,5,6]));
+//console.log(sum([1,2,3,4,5,6]));
 
 
 
@@ -36,7 +36,7 @@ var arraySum = function(array) {
    }
    return sum;
 };
-console.log(arraySum([1,[2,3],[[4]],5]));
+//console.log(arraySum([1,[2,3],[[4]],5]));
 
 
 
@@ -47,7 +47,7 @@ var isEven = function(n) {
     if(n < 0) return isEven(-n);
     return isEven(n -2);
 };
-console.log(isEven(10));
+//console.log(isEven(10));
 
 
 // 5. Sum all integers below a given integer.
@@ -59,7 +59,7 @@ var sumBelow = function(n) {
     else n -=1;
     return n + sumBelow(n);
 };
-console.log(sumBelow(10));
+//console.log(sumBelow(10));
 
 
 // 6. Get the integers in range (x, y).
@@ -73,7 +73,7 @@ var range = function(x, y) {
     else x += 1;
     newArr.push(x);
     return newArr.concat(range(x,y));
-}; console.log(range(2,9));
+}; //console.log(range(2,9));
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
@@ -87,7 +87,7 @@ var exponent = function(base, exp) {
     return 1;
     else 
     return base * exponent(base, exp-1);
-}; console.log(exponent(4,2));
+}; //console.log(exponent(4,2));
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
@@ -95,14 +95,14 @@ var exponent = function(base, exp) {
 // powerOfTwo(10); // false
 var powerOfTwo = function(num) {
     return num == 1 ? true : (num < 1 ? false : powerOfTwo(num/2));
-}; console.log(powerOfTwo(4));
+}; //console.log(powerOfTwo(4));
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
     if(string.length === 0) return '';
        else 
        return reverse(string.slice(1)) + string[0];
-}; console.log(reverse('Racecar'));
+}; //console.log(reverse('Racecar'));
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(str) {
@@ -428,58 +428,68 @@ var alternateSign = function(array) {
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
-var numToText = function(str) {
-    const outputArr = str.split(' ');
-  const index1 = outputArr.indexOf('1');
-  const index2 = outputArr.indexOf('2');
-  const index3 = outputArr.indexOf('3');
-  const index4 = outputArr.indexOf('4');
-  const index5 = outputArr.indexOf('5');
-  const index6 = outputArr.indexOf('6');
-  const index7 = outputArr.indexOf('7');
-  const index8 = outputArr.indexOf('8');
-  const index9 = outputArr.indexOf('9');
-  const index10 = outputArr.indexOf('10');
-  if(index1 != -1) outputArr.splice(index1, 1, 'one');
-  if(index2 != -1) outputArr.splice(index2, 1, 'two');
-  if(index3 != -1) outputArr.splice(index3, 1, 'three');
-  if(index4 != -1) outputArr.splice(index4, 1, 'four');
-  if(index5 != -1) outputArr.splice(index5, 1, 'five');
-  if(index6 != -1) outputArr.splice(index6, 1, 'six');
-  if(index7 != -1) outputArr.splice(index7, 1, 'seven');
-  if(index8 != -1) outputArr.splice(index8, 1, 'eight');
-  if(index9 != -1) outputArr.splice(index9, 1, 'nine');
-  if(index10 != -1) outputArr.splice(index10, 1, 'ten');
-  return outputArr.join(' ');
+var numToText = function(str, modded = []) {
+  if (str.length === 0){
+      var joinedMod = modded.join(" ");
+      return joinedMod;
+  }
+  var numStringObj = {
+      1: "one",
+      2: "two",
+      3: "three",
+      4: "four",
+      5: "five",
+      6: "six",
+      7: "seven",
+      8: "eight",
+      9: "nine",
+      10: "ten"
+  };
+  var splitString = str.split(' ');
+  for (var key in numStringObj){
+      if (splitString[0] === key){
+          modded.push(numStringObj[key]);
+          var x = splitString.slice(1);
+          str = x.join(' ');
+          return numToText(str, modded);
+      }
+  }
+  if (modded[0] === splitString[0]){
+      null;
+  }
+  if (modded[0] !== splitString[0]){
+      modded.push(splitString[0]);
+  }
+  var splitTakeAway = splitString.slice(1);
+  str = splitTakeAway.join(' ');
+  return numToText(str, modded);
 };
+
 
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node) {
-  
+    return document.getElementsByTagName('p').length;
 };
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(list, value, min, max) {
-      
-  let start = 0;
-  let stop = list.length - 1;
-  let middle = Math.floor((start + stop) / 2);
-
-  while (list[middle] !== value && start < stop) {
-    if (value < list[middle]) {
-      stop = middle - 1;
-    } else {
-      start = middle + 1;
-    }
-    middle = Math.floor((start + stop) / 2);
-  }
-  return (list[middle] !== value) ? null : middle;
-};
+var binarySearch = function(array, target, start = 0, end = array.length-1){
+  
+   let middle = Math.floor((start + end) /2);
+   if(start > end) return null;
+   if(array[start] === target) return start;
+   if(array[end] === target) return end;
+   if(array[middle] > target){
+     return binarySearch(array, target, start + 1, middle);
+   }
+   if(array[middle] < target){
+     return binarySearch(array, target, middle, end -1);
+   } return middle;
+ }
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
