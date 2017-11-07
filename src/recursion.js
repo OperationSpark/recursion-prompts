@@ -451,22 +451,33 @@ var capitalizeFirst = function (array, newArr = [], i = 0) {
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
-// var obj1 = {
-//   a: 2,
-//   b: {b: 2, bb: {b: 3, bb: {b: 2}}},
-//   c: {c: {c: 2}, cc: 'ball', ccc: 5},
-//   d: 1,
-//   e: {e: {e: 2}, ee: 'car'}
-// };
-// nestedEvenSum(obj1); // 10
-var nestedEvenSum = function(obj) {
-    
+var obj1 = {
+  a: 2,
+  b: {b: 2, bb: {b: 3, bb: {b: 2}}},
+  c: {c: {c: 2}, cc: 'ball', ccc: 5},
+  d: 1,
+  e: {e: {e: 2}, ee: 'car'}
 };
+// nestedEvenSum(obj1); // 10
+var nestedEvenSum = function(obj, sumObj={sum: 0}) {
+    debugger;
+    for (var key in obj) {
+        if (typeof obj[key] !== 'object' && obj[key] % 2 === 0) {
+            sumObj.sum += obj[key];
+        } else if(typeof obj[key] === 'object'){
+            nestedEvenSum(obj[key], sumObj);
+        }
+    }
+    return sumObj.sum;
+};
+
+nestedEvenSum(obj1);    
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
-//var flatten = function(arrays) {
-//};
+var flatten = function(arrays) {
+    
+};
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
