@@ -396,6 +396,13 @@ var augmentElements = function(array, aug) {
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+    if (array.length === 1) {
+        return array[0];
+    }
+    if (array[0] === array[1] && array[0] === 0) {
+        return minimizeZeroes(array.slice(1));
+    }
+    return [array[0]].concat(minimizeZeroes(array.slice(1)));
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
@@ -403,12 +410,36 @@ var minimizeZeroes = function(array) {
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+    if (array.length === 0) {
+        return [];
+    } else if (array.length % 2 === 0) {
+        let neg = array.slice(-1);
+        neg = neg < 0 ? neg : -neg;
+        return alternateSign(array.slice(0, -1)).concat(neg);
+    } else {
+        let pos = array.slice(-1);
+        pos = pos > 0 ? pos : -pos;
+        return alternateSign(array.slice(0, -1)).concat(pos);
+    }
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+    var spell = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+    if (str.length === 0) {
+        return '';
+    }
+    for (var i = 1; i < 10; i++){
+        if (str[0] === '0'){
+            return 'zero' + numToText(str.slice(1));
+        }
+        if (str[0] == i){
+            return spell[i] + numToText(str.slice(1));
+        }
+    }
+    return str[0] + numToText(str.slice(1));
 };
 
 // *** EXTRA CREDIT ***
