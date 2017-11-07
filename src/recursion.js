@@ -631,7 +631,8 @@ var tagCount = function(tag, node = document.body, children = node.childNodes, i
     if(children[i].nodeName.toLowerCase() === tag){
         counter++;
     }
-    i++
+    i++;
+
     return tagCount(tag, node, children, i, counter);
 }
 
@@ -639,15 +640,29 @@ var tagCount = function(tag, node = document.body, children = node.childNodes, i
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function (array, target, min, max, i = 0) {
-    if(i === array.length){
+// var binarySearch = function (array, target, min, max, i = 0) {
+//     if(i === array.length){
+//         return null;
+//     }else if(array[i] === target){
+//         return i;
+//     }
+//     i++;
+//     return binarySearch(array, target, min, max, i);
+// };
+
+var binarySearch = function(array, target, min = 0, max = array.length - 1, i = 0){
+    if(min > max){
         return null;
-    }else if(array[i] === target){
-        return i;
     }
-    i++;
-    return binarySearch(array, target, min, max, i);
-};
+    i = Math.floor(min + (max - min) / 2);
+    if(target === array[i]){
+        return i;
+    }else if(target < array[i]){
+        return binarySearch(array, target, min, i - 1);
+    }else{
+        return binarySearch(array, target, i + 1, max);
+    }
+}
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
