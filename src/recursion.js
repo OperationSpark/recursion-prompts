@@ -478,5 +478,20 @@ var binarySearch = function(array, target, min = 0, max = array.length) {
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
 var mergeSort = function(array) {
-
+    if (array.length < 2) {
+        return array;
+    }
+    var midPoint = Math.floor(array.length / 2);
+    var subLeft = mergeSort(array.slice(0, midPoint));
+    var subRight = mergeSort(array.slice(midPoint));
+    var merge = function(node1, node2) {
+        var result = [];
+        while (node1.length > 0 && node2.length > 0)
+            result.push(node1[0] < node2[0] ? node1.shift() : node2.shift());
+        return result.concat(node1.length? node1 : node2);
+        }
+    return merge(subLeft, subRight);
 };
+
+
+//WOO HOO!
