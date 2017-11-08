@@ -296,15 +296,15 @@ var countKeysInObj = function(obj, key, count = 0) {
           }
     return count;
 };
-// console.log(countKeysInObj(testobj, 't', count = 0));
+
 // 22. Write a function that counts the number of times a value occurs in an object.
-var testobj = {'e': {'x':'y'}, 
-               't':{
-                    'r': {'e':'r'}, 
-                    'p': {'y':'r'}
-                    },
-                'y':'e'
-              };
+// var testobj = {'e': {'x':'y'}, 
+//                't':{
+//                     'r': {'e':'r'}, 
+//                     'p': {'y':'r'}
+//                     },
+//                 'y':'e'
+//               };
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
 var countValuesInObj = function(obj, value, count = 0) {
@@ -321,20 +321,28 @@ return count;
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
+// var testobj = {'e': {'x':'y'}, 
+//                't':{
+//                      'r': {'e':'r'}, 
+//                      'p': {'y':'r'}
+//                     },
+//                'y':'e'
+//               };
 var replaceKeysInObj = function(obj, key, newKey) {
+    // debugger;
     for(let aKey in obj){ //   console.log('obj key', aKey)
     if(aKey === key){
         obj[newKey] = obj[aKey];
         delete obj[key];
-        console.log(obj)
+        // console.log(obj)
       }
       else if(typeof obj[aKey] === 'object'){
-           return replaceKeysInObj(obj[aKey], key, newKey);
+           replaceKeysInObj(obj[aKey], key, newKey);
           }
     }
 return obj;
 };
-
+// console.log(replaceKeysInObj(testobj, 'e', 'b'));
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
 // number is the sum of the previous two.
 // Example:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
@@ -407,26 +415,26 @@ var capitalizeFirst = function(array) {
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
-var nestedEvenSum = function(obj) {
+var nestedEvenSum = function(obj, count = 0) {
+    for(let aKey in obj){ //   console.log('obj key', aKey)
+        if(obj[aKey] % 2 === 0){
+            count += obj[aKey];
+        }
+        else if(typeof obj[aKey] === 'object'){
+           count += nestedEvenSum(obj[aKey]);
+        }
+    }
+return count;
 };
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
-    array.forEach(function(item){
-        if(Array.isArray(item)){
-            if(item.length === 1){
-                return [item];
-            }
-            else{
-                return [item[0]].concat(flatten(item.slice(1)))
-            }
-            
-        }
-        else {
-            return [item].concat(flatten(array.slice(1)));
-        }
-    })
+    return array.reduce((arr, el) => {
+        // base case: add integer element to sum
+        // recursive case: call arraySum on non-integer element
+        return arr.concat((Array.isArray(el) ? flatten(el) : el))
+      }, []);
 };
 
 // 30. Given a string, return an object containing tallies of each letter.
@@ -470,12 +478,22 @@ var compress = function(list) {
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
-    if(aug === undefined){
+    // return array.reduce((arr, el) => {
+    //     if(Array.isArray(el)){
+    //       el.push(aug);
+    //       // console.log('el', el)
+    //       arr.push(el);
+    //       // console.log('arr', arr);
+    //     }
+    //     return arr;
+    //   }, []);
+    if(array.length === 0){
         return array;
     }
-    else{
-        return array[0].push(aug)
+    else if(Array.isArray(array[0])){
+        return [array[0].push(aug)].concat(augmentElements(array.slice(1), aug));
     }
+    
 };
 
 // 33. Reduce a series of zeroes to a single 0.
