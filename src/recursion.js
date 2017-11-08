@@ -478,20 +478,12 @@ var compress = function(list) {
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
-    // return array.reduce((arr, el) => {
-    //     if(Array.isArray(el)){
-    //       el.push(aug);
-    //       // console.log('el', el)
-    //       arr.push(el);
-    //       // console.log('arr', arr);
-    //     }
-    //     return arr;
-    //   }, []);
+    
     if(array.length === 0){
         return array;
     }
     else if(Array.isArray(array[0])){
-        return [array[0].push(aug)].concat(augmentElements(array.slice(1), aug));
+        return [array[0].concat([aug])].concat(augmentElements(array.slice(1), aug));
     }
     
 };
