@@ -342,78 +342,42 @@ var rMap = function (array, callback, result = [], i = 0) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
-var countKeysInObj = function (obj, key, result = {}) {
-    let copy = {};
-    Object.assign(copy, obj);
-    for (let k in copy) {
-        if (typeof copy[k] !== 'object') {
-            if (!result[k]) {
-                result[k] = 1;
-                delete copy[k];
-            } else if (result[k]) {
-                result[k]++;
-                delete copy[k];
-            }
+var countKeysInObj = function (obj, key, counter = 0) {
+    for (let k in obj) {
+        if (k === key) {
+            counter++;
+        } else if (typeof obj[k] === 'object') {
+            counter = countKeysInObj(obj[k], key, counter);
         }
     }
-    for (let k in copy) {
-        if (typeof copy[k] === 'object') {
-            result[k] = 1;
-            Object.assign(copy, copy[k]);
-            delete copy[k];
-            return countKeysInObj(copy, key, result);
-        }
-    }
-    if (result[key] === undefined) {
-        return 0;
-    }
-    return result[key];
+    return counter;
 };
 
 // 22. Write a function that counts the number of times a value occurs in an object.
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
-var countValuesInObj = function (obj, value, result={}) {
-    let copy = {};
-    Object.assign(copy, obj);
-    for (let k in copy) {
-        if(typeof copy[k] === 'string') {
-            if(!result[copy[k]]){
-                result[copy[k]] = 1;
-                delete copy[k];
-            }else if(result[copy[k]]) {
-                result[copy[k]]++;
-                delete copy[k];
-            }
-        } 
-    }
-    for(let k in copy){
-        if (typeof copy[k] === 'object') {
-            Object.assign(copy, copy[k]);
-            delete copy[k];
-            return countValuesInObj(copy, value, result);
+var countValuesInObj = function (obj, value, counter = 0) {
+    for (let key in obj) {
+        if (obj[key] === value) {
+            counter++;
+        } else if (typeof obj[key] === 'object') {
+            counter = countValuesInObj(obj[key], value, counter);
         }
     }
-    if(result[value] === undefined){
-        return 0;
-    }
-    return result[value];
+    return counter;
 };
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function (obj, key, newKey) {
-    for(let k in obj){
-        if(k === key){
+    for (let k in obj) {
+        if (typeof obj[k] === 'object') {
+            obj[k] = replaceKeysInObj(obj[k], key, newKey);
+        }
+        if (k === key) {
             obj[newKey] = obj[key];
             delete obj[key];
-        }
-    }
-    for(let k in obj){
-        if(typeof obj[k] === 'object'){
-            obj[k] = replaceKeysInObj(obj[k], key, newKey);
-            
         }
     }
     return obj;
@@ -489,15 +453,16 @@ var capitalizeFirst = function (array, i = 0, result = []) {
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
-var nestedEvenSum = function (obj, counter = 0) {
-    for(let key in obj){
-        if(obj[key] % 2 === 0){
-            counter += obj[key];
-        }else if(typeof obj[key] === 'object'){
-            counter = nestedEvenSum(obj[key], counter);
+var nestedEvenSum = function (obj, sum = 0) {
+    for (let key in obj) {
+        if (obj[key] % 2 === 0) {
+            sum += obj[key];
+        }
+        if (typeof obj[key] === 'object') {
+            sum = nestedEvenSum(obj[key], sum);
         }
     }
-    return counter;
+    return sum;
 };
 
 // 29. Flatten an array containing nested arrays.
@@ -624,31 +589,24 @@ var numToText = function (str, i = 0, arr = str.split('')) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node = document.body, children = node.childNodes, i = 0, counter = 0) {
-    if(i === children.length){
-        return counter;
-    }
-    if(children[i].nodeName.toLowerCase() === tag){
+
+var tagCount = function(tag, node, counter = 0){
+    node = node || document.body;
+    if(node.nodeName.toLowerCase() === tag){
         counter++;
     }
-    i++;
-
-    return tagCount(tag, node, children, i, counter);
+    if(node.hasChildNodes()){
+        let newNode = node.childNodes;
+        for(let i = 0; i < node.childNodes.length; i++){
+            counter = tagCount(tag, newNode[i], counter);
+        }
+    }
+    return counter;
 }
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
-
-// var binarySearch = function (array, target, min, max, i = 0) {
-//     if(i === array.length){
-//         return null;
-//     }else if(array[i] === target){
-//         return i;
-//     }
-//     i++;
-//     return binarySearch(array, target, min, max, i);
-// };
 
 var binarySearch = function(array, target, min = 0, max = array.length - 1, i = 0){
     if(min > max){
