@@ -8,7 +8,8 @@
       var htmlStrings = [
         '<p class="recursionTest"></p>',
         '<p class="otherClassName recursionTest"></p>',
-        '<p><div class="somediv"><div class="innerdiv"><span class="recursionTest">yay</span></div></div></p>'
+        '<p><div class="somediv"><div class="innerdiv"><span class="recursionTest">yay</span></div></div></p>',
+        '<div><p></p></div>'
       ];
 
       var result;
@@ -25,7 +26,6 @@
           result = tagCount('p');
           expectedTagCount = document.getElementsByTagName('p').length;
           expect(result).to.equal(expectedTagCount);
-
           $rootElement.remove();
         });
         $('body').removeClass('recursionTest');
