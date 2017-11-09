@@ -291,25 +291,48 @@ var rMap = function(array, callback) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
-var countKeysInObj = function(obj, key) {
-    var count = 0;
-    if (obj === {}) {
-        return count;
-    } else if (obj.key) {
-        
+var countKeysInObj = function(obj, key, count = 0) {
+    for (var prop in obj) {
+        if (prop === key) {
+            count++;
+        }
+        var value = obj[prop];
+        if (typeof value === 'object') {
+            count += countKeysInObj(value, key);
+        }
     }
+    return count;
 };
 
 // 22. Write a function that counts the number of times a value occurs in an object.
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
-var countValuesInObj = function(obj, value) {
+var countValuesInObj = function(obj, value, count = 0) {
+    for (var prop in obj){
+        if (obj[prop] === value) {
+            count++;
+        }
+        if (typeof obj[prop] === 'object') {
+            count += countValuesInObj(obj[prop], value);
+        }
+    }
+    return count;
 };
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, key, newKey) {
+    for (var prop in obj) {
+        if (prop === key) {
+            obj[newKey] = obj[prop];
+            delete obj[prop];
+        }
+        if (typeof obj[prop] === 'object') {
+            replaceKeysInObj(obj[prop], key, newKey);
+        }
+    }
+    return obj;
 };
 
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
@@ -435,7 +458,6 @@ var compress = function(list, count = 0, num, cArr = []) {
 
 
     if (list.length === 0) {
-        return cArr;
     return compress(list.slice(1), count++, cArr);
     }
 };
@@ -444,11 +466,11 @@ var compress = function(list, count = 0, num, cArr = []) {
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 var augmentElements = function(array, aug) {
-    // array.forEach(function(e, i, a) {
-    //     if(){
-
-    //     }
-    // });
+    if (array.length === 1) {
+        return [array[0].concat(aug)];
+    } else {
+        return [array[0].concat(aug)].concat(augmentElements(array.slice(1), aug));
+    }
 };
 
 // 33. Reduce a series of zeroes to a single 0.
@@ -474,7 +496,6 @@ var minimizeZeroes = function(array, arrayContents = 0, result = []) {
 var alternateSign = function (array, index = 0, out = []) {
     var odds = index % 2 === 1;
     var evens = index % 2 === 0
-    console.log(evens, odds, index, array[index])
     if (index === array.length) {
         return out
     }
@@ -503,16 +524,12 @@ function numToText(str, target = 0) {
         8: 'eight',
         9: 'nine'
     };
-
     if (target === 10)
         return str;
-
     const
         replaceWith = map[target],
         regEx = new RegExp(target, 'g'),
         processed = str.replace(regEx, replaceWith);
-
-
     return numToText(processed, ++target);
 }
 
