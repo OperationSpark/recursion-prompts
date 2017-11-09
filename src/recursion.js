@@ -331,12 +331,12 @@ return count;
 var replaceKeysInObj = function(obj, key, newKey) {
     // debugger;
     for(let aKey in obj){ //   console.log('obj key', aKey)
-    if(aKey === key){
-        obj[newKey] = obj[aKey];
-        delete obj[key];
-        // console.log(obj)
-      }
-      else if(typeof obj[aKey] === 'object'){
+        if(aKey === key){
+            obj[newKey] = obj[aKey];
+            delete obj[key];
+            // console.log(obj)
+        }
+        else if(typeof obj[aKey] === 'object'){
            replaceKeysInObj(obj[aKey], key, newKey);
           }
     }
@@ -548,6 +548,7 @@ var numToText = function(str) {
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node) {
+    console.log(document.getElementsByTagName(tag).length);
 };
 
 // 37. Write a function for binary search.
@@ -555,6 +556,30 @@ var tagCount = function(tag, node) {
 // console.log(binarySearch(5)) will return '5'
 
 var binarySearch = function(array, target, min, max) {
+    var currentIndex;
+    var curEl;
+
+    while (min <= max) {
+        // Find the value of the middle of the array
+        var mid = (min + max) / 2 || 0;
+        curEl = array[mid];
+        
+        // It's the same as the value in the middle - we can return!
+        if (curEl === target)
+        {
+          return mid;
+        }
+        // Is the value less than the value in the middle of the array
+        if (curEl < target) {
+          return binarySearch(array, target, mid + 1, max);
+        }
+        // Is the value greater than the value in the middle of the array
+        if (curEl > target) {
+          return binarySearch(array, target, min, mid - 1);
+        }
+    }
+
+    return -1;
 };
 
 // 38. Write a merge sort function.
@@ -562,4 +587,5 @@ var binarySearch = function(array, target, min, max) {
 // Sample output: [5,7,23,32,34,62]
 var mergeSort = function(array) {
 
+    return array;
 };
