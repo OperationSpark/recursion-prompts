@@ -380,7 +380,7 @@ var countValuesInObj = function(obj, value,masterObj={valueCount: 0}) {
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
-var replaceKeysInObj = function(obj, key, newKey, masterObj={}) {
+var replaceKeysInObj = function(obj, key, newKey) {
     if (obj.hasOwnProperty(key)) {
         obj[newKey] = obj[key];
         delete obj[key];
@@ -604,11 +604,18 @@ var numToText = function (str, strArr = str.split(''), i = 0) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
-    debugger;
-    return document.body.getElementsByTagName(tag).length;
+var tagCount = function(tag, node=document.body, count=0) {
+    if(node.nodeName.toLowerCase() === tag){
+            count++;
+    }
+    if (node.hasChildNodes()){
+        let childNodes = node.childNodes;
+        for (let i=0; i<childNodes.length; i++) {
+            count = tagCount(tag, childNodes[i], count);
+        }
+    }
+    return count;
 };
-tagCount('p');
 
 // 37. Write a function for binary search.
 // var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
@@ -636,7 +643,32 @@ var binarySearch = function(array, target, min=0, max=array.length) {
 //binarySearch(primes, 19);
 
 // 38. Write a merge sort function.
-// Sample array:  [34,7,23,32,5,62]
+// let arr =  [34,7,23,32,5,62, 17];
 // Sample output: [5,7,23,32,34,62]
 var mergeSort = function(array) {
+    //////////////////////////////////
+    const merge = function (left, right) {
+        let results = [];
+        let indexLeft = 0;
+        let indexRight = 0;
+
+        while (indexLeft < left.length && indexRight < right.length){
+            if (left[indexLeft] < right[indexRight]) {
+                results.push(left[indexLeft++]);
+            } else {
+                results.push(right[indexRight++]);
+            }
+        }
+        return results.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+    }
+    /////////////////////////////////////
+    if (array.length < 2) {
+        return array;
+    }
+    /////////////////////////////////////
+    let middle = Math.floor(array.length / 2);
+    let left = array.slice(0, middle);
+    let right = array.slice(middle);
+
+    return merge(mergeSort(left), mergeSort(right));
 };
