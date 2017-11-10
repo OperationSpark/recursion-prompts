@@ -547,45 +547,66 @@ var numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
-    console.log(document.getElementsByTagName(tag).length);
+var tagCount = function(tag, node, count = 0) {
+ 
+    node = node || document;
+
+        if (node.tagName === tag.toUpperCase()) {
+          count++;
+        }
+
+      for (let i = 0; i < node.children.length; i++) {
+        count += tagCount(tag, node.children[i]);
+      }
+  
+    return count;
 };
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
-    var currentIndex;
-    var curEl;
-
-    while (min <= max) {
-        // Find the value of the middle of the array
-        var mid = (min + max) / 2 || 0;
-        curEl = array[mid];
-        
-        // It's the same as the value in the middle - we can return!
-        if (curEl === target)
-        {
-          return mid;
+var binarySearch = function(array, target, min = 0, max = array.length - 1) {
+    if (min > max) {
+            return null;
         }
-        // Is the value less than the value in the middle of the array
-        if (curEl < target) {
-          return binarySearch(array, target, mid + 1, max);
-        }
-        // Is the value greater than the value in the middle of the array
-        if (curEl > target) {
-          return binarySearch(array, target, min, mid - 1);
-        }
-    }
-
-    return -1;
+    var index = Math.floor((max + min) / 2);
+    if (array[index] === target) {
+        return index;
+    } else if (array[index] > target) {
+            return binarySearch(array, target, min, index - 1);
+        } 
+      else if(array[index] < target){
+            return binarySearch(array, target, index + 1, max);
+        } 
+    return index;
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function(array) {
 
-    return array;
-};
+    
+    var merge = function (left, right) {
+        var result = [],
+            il = 0,
+            ir = 0;
+        while (il < left.length && ir < right.length) {
+            if (left[il] < right[ir]) {
+                result.push(left[il++]);
+            } else {
+                result.push(right[ir++]);
+            }
+        }
+        return result.concat(left.slice(il)).concat(right.slice(ir));
+    }
+    var mergeSort = function(items) {
+        if (items.length < 2) {
+            return items;
+        }
+        var middle = Math.floor(items.length / 2),
+            left = items.slice(0, middle),
+            right = items.slice(middle);
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
