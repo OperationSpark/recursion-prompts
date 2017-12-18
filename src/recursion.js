@@ -4,32 +4,75 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-var factorial = function(n) {
+
+var factorial = (n) => {
+  if (n < 0) {return null}
+  if (n === 0) {return 1}
+  return n * factorial(n - 1);
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array) {
+
+var sum = (array, result = 0, i = 0) => {
+  if (array.length === i) {return result}
+  return sum(array, result += array[i], ++i);
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
-var arraySum = function(array) {
+
+var arraySum = (array, sum = 0, i = 0) => { 
+  if (array.length === i) {return sum}
+  if (Array.isArray(array[i])) {
+    sum = arraySum(array[i], sum);
+    ++i
+  } else {
+    sum += array[i];
+    ++i
+  }
+  return arraySum(array, sum, i);
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+
+var isEven = (n) => {
+  if (n === 1) {return false}
+  if (n === 0) {return true}
+  if (n < 0) {return isEven(n + 2)}
+  else if (n > 0) {return isEven(n - 2)}
+  return null;
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+
+var sumBelow = (n, sum = 0, i = 0) => {
+  if (n === i) {return sum}
+  if (n < 0) {
+    return sumBelow(n, sum += i, --i);
+  } else if (n > 0) {
+    return sumBelow(n, sum += i, ++i);
+  }
+  return null; 
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+
+var range = (x, y, i = x, rangeArray = []) => {
+  if (x === y || x - y === 1 || x - y === -1) {
+    return [];
+  }
+  if (i === y - 1 || i === y + 1) {
+    return rangeArray; 
+  }
+  if (x < y) {
+    return range(x, y, ++i, rangeArray.concat(i));    
+  } else {
+    return range(x, y, --i, rangeArray.concat(i));
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -37,22 +80,58 @@ var range = function(x, y) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-var exponent = function(base, exp) {
+
+var exponent = (base, exp, i = 1, result = base) => {
+  if (i === exp) {
+      return result;
+  }
+  if (exp === 0) {
+      return 1; 
+  }
+  if (exp < 0) {
+    return exponent(base, exp, --i, result / base);
+  }
+  return exponent(base, exp, ++i, result * base);
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
-var powerOfTwo = function(n) {
+
+var powerOfTwo = (n, i = 1) => {
+  if (i === n) {
+    return true;
+  }
+  if (i > n) {
+    return false; 
+  }
+  if (n < 1) {
+    return false;
+  }
+  return powerOfTwo(n, i * 2);
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+
+var reverse = (string, i = string.length, reversedString = '') => {
+  if (i === 0) {
+    return reversedString; 
+  }
+  return reverse(string, --i, reversedString + string[i]);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
+
+var palindrome = (string, reversedString = reverse(string), i = 0) => {
+  string = string.split(' ').join('').toLowerCase();
+  reversedString = reversedString.split(' ').join('').toLowerCase(); 
+  if (i === string.length) {
+    return true;
+  } else if (string[i] !== reversedString[i]) {
+    return false;
+  }
+  return palindrome(string, reversedString, ++i);
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -60,12 +139,76 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-var modulo = function(x, y) {
+
+var modulo = (x, y, runningTotal = y) => {
+  if (y === 0) {
+    return NaN;
+  }
+  if (x === 0) {
+    return 0;
+  }
+  if (x > 0) {
+    if (y > x) {
+      return x; 
+    }
+    if (y > 0) {
+      if (runningTotal + y > x) {
+        return x - runningTotal;
+      }
+      if (runningTotal + y === x) {
+        return 0;
+      }
+      return modulo(x, y, runningTotal + y);
+    }
+    if (y < 0) {
+      if (runningTotal - y > x) {
+        return x - runningTotal;
+      }
+      if (runningTotal - y === x) {
+        return 0;
+      }
+      return modulo(x, y, runningTotal - y)
+    }
+  }  
+  if (x < 0) {
+    if (y > 0) {
+      if (runningTotal - y < x) {
+        return x + runningTotal;
+      }
+      if (runningTotal - y === x) {
+        return 0;
+      }
+      return modulo(x, y, runningTotal - y);
+    }
+    if (y < 0) {
+      if (y < x) {
+        return x; 
+      }
+      if (runningTotal + y < x) {
+        return x - runningTotal;
+      }
+      if (runningTotal + y === x) {
+        return 0;
+      }
+      return modulo(x, y, runningTotal + y)
+    }
+  }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
-var multiply = function(x, y) {
+var multiply = (x, y, i = 0, product = 0) => {
+  if (i === y) {
+    return product; 
+  }
+  if (x < 0 && y < 0) {
+    return multiply(x, y, --i, product - x);
+  } 
+  if (y > 0) {
+    return multiply(x, y, ++i, product + x);
+  } else {
+    return multiply(x, y, --i, product + x);
+  }
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -219,18 +362,40 @@ var numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
+
+var tagCount = (tag, elements = [], i = 0) => {
+  if (i === document.getElementsByTagName(tag).length) {
+    return elements.length; 
+  }
+  return tagCount(tag, elements.concat(document.getElementsByTagName(tag)[i]), ++i); 
 };
 
 // 37. Write a function for binary search.
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
+var binarySearch = (array, target, i = 0) => {
+  if (array[i] === target) {
+    return i;
+  }
+  if (array.length === i) {
+    return null;
+  }
+  return binarySearch(array, target, ++i);
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function(array) {
+
+var mergeSort = (array, sortedArray = [], i = 0, low = Infinity) => {
+  if (array.length === i) {
+    return sortedArray; 
+  }
+  for (let num of array) {
+    if (num < low && !(sortedArray.includes(num))) {
+      low = num;
+    }
+  }  
+  return mergeSort(array, sortedArray.concat(low), ++i);
 };
