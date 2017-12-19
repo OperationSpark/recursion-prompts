@@ -284,7 +284,19 @@ var countValuesInObj = function(obj, value, keys = Object.keys(obj)) {
 
 // (OPTIONAL) 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
-var replaceKeysInObj = function(obj, key, newKey) {
+var replaceKeysInObj = function(obj, key, newKey, keys = Object.keys(obj)) {
+    if (keys.length === 0) {
+        return obj;
+    } else if (keys[0] === key) {
+        obj[newKey] = obj[key];
+        delete obj[key];
+        return replaceKeysInObj(obj, key, newKey, keys.slice(1));
+    } else if (typeof obj[keys[0]] === "object") {
+        obj[keys[0]] = replaceKeysInObj(obj[keys[0]], key, newKey); 
+        return replaceKeysInObj(obj, key, newKey, keys.slice(1));
+    } else {
+        return replaceKeysInObj(obj, key, newKey, keys.slice(1));
+    }
 };
 
 // (OPTIONAL) 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
@@ -334,7 +346,16 @@ var capitalizeFirst = array => array.length === 0 ? [] : [`${array[0][0].toUpper
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
-var nestedEvenSum = function(obj, ) {
+var nestedEvenSum = function(obj, keys = Object.keys(obj)) {
+    if (keys.length === 0) {
+        return 0;
+    } else if (obj[keys[0]] % 2 === 0) {
+        return obj[keys[0]] + nestedEvenSum(obj, keys.slice(1));
+    } else if (typeof obj[keys[0]] === "object") {
+        return nestedEvenSum(obj[keys[0]]) + nestedEvenSum(obj, keys.slice(1));
+    } else {
+        return nestedEvenSum(obj, keys.slice(1));
+    }
 };
 
 // (OPTIONAL) 29. Flatten an array containing nested arrays.
@@ -449,6 +470,7 @@ var numToText = function(str, resStr = '') {
 
 // 36. Return the number of times a tag occurs in the DOM.
 var tagCount = function(tag, node) {
+    return document.getElementsByTagName(tag).length;
 };
 
 // 37. Write a function for binary search.
