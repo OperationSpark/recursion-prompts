@@ -250,15 +250,19 @@ var rMap = (array, callback, resArr = [], i = 0) =>
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
-var countKeysInObj = function(obj, key, objKeys = Object.keys(obj), res = 0) {
-    if (objKeys.length === 0) {
-        return res;
-    } else if (objKeys[0] === key) {
-        return countKeysInObj(obj, key, objKeys.slice(1), ++res);
-    } else if (typeof obj[objKeys[0]] === "object") {
-        return countKeysInObj(obj[objKeys[0]], key, objKeys, res);
+var countKeysInObj = function(obj, key, keys = Object.keys(obj)) {
+    if (keys.length === 0) {
+        return 0;
+    } else if (keys[0] === key) {
+        if (typeof obj[keys[0]] === "object") {
+            return countKeysInObj(obj[keys[0]], key) + countKeysInObj(obj, key, keys.slice(1)) + 1;
+        } else {
+            return countKeysInObj(obj, key, keys.slice(1)) + 1;
+        }
+    } else if (typeof obj[keys[0]] === "object") {
+        return countKeysInObj(obj[keys[0]], key) + countKeysInObj(obj, key, keys.slice(1));
     } else {
-        return countKeysInObj(obj, key, objKeys.slice(1), res);
+        return countKeysInObj(obj, key, keys.slice(1));
     }
 };
 
@@ -266,7 +270,16 @@ var countKeysInObj = function(obj, key, objKeys = Object.keys(obj), res = 0) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
-var countValuesInObj = function(obj, value) {
+var countValuesInObj = function(obj, value, keys = Object.keys(obj)) {
+    if (keys.length === 0) {
+        return 0;
+    } else if (obj[keys[0]] === value) {
+        return countValuesInObj(obj, value, keys.slice(1)) + 1;
+    } else if (typeof obj[keys[0]] === "object") {
+        return countValuesInObj(obj[keys[0]], value) + countValuesInObj(obj, value, keys.slice(1));
+    } else {
+        return countValuesInObj(obj, value, keys.slice(1));
+    }
 };
 
 // (OPTIONAL) 23. Find all keys in an object (and nested objects) by a provided name and rename
@@ -321,7 +334,7 @@ var capitalizeFirst = array => array.length === 0 ? [] : [`${array[0][0].toUpper
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
-var nestedEvenSum = function(obj) {
+var nestedEvenSum = function(obj, ) {
 };
 
 // (OPTIONAL) 29. Flatten an array containing nested arrays.
@@ -360,7 +373,16 @@ var compress = function(list, compressedList = []) {
 // (OPTIONAL) 32. Augument every element in a list with a new value where each element is an array
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
-var augmentElements = function(array, aug) {
+var augmentElements = (array, aug, res = []) => {
+    if (array.length === 0) {
+        return res;
+    } else if (Array.isArray(array[0])) {
+        array[0].push(aug);
+        res.push(array[0]);
+        return augmentElements(array.slice(1), aug, res);
+    } else {
+        return augmentElements(array.slice(1), aug, res);
+    }
 };
 
 // 33. Reduce a series of zeroes to a single 0.
@@ -433,11 +455,25 @@ var tagCount = function(tag, node) {
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
+var binarySearch = function(array, target, res = 0) {
+    if (array.length === 0) {
+        return null; 
+    } else if (array[0] === target) {
+        return res;
+    }
+    return binarySearch(array.slice(1), target, ++res);
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function(array) {
+var mergeSort = (array, sorted = []) => {
+    const sortedIndex = (arr, num, index = 0) => num < arr[0] || arr.length === 0 ? index : sortedIndex(arr.slice(1), num, ++index);
+    
+    if (array.length === 0) {
+        return sorted;
+    } else {
+        sorted.splice(sortedIndex(sorted, array[0]), 0, array[0]);
+        return mergeSort(array.slice(1), sorted);
+    }   
 };
