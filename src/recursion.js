@@ -577,27 +577,34 @@ var numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node = document.getElementsByTagName("*")) {
+var tagCount = function(tag, node = Array.from(document.getElementsByTagName("body"))) {
     
-    if(node[0] === undefined){
-        debugger;
-    }
     if(node.length === 0){
         return 0;
-    }else if(node[0].hasChildNodes){
-        if(node[0].tagName === tag){
-            return 1 + tagCount(tag, node[0]) + tagCount(tag, node.slice(1));
-        }else{
-            return tagCount(tag, node[0]) + tagCount(tag, node.slice(1));
-        }
-    
     }else{
-        if(node[0].tagName === tag){
-            return 1 + tagCount(tag, node.slice(1));
-        }else{
-            return tagCount(tag, node.slice(1));
+        if(node[0].getElementsByTagName(tag).length){
+            node[0].tagName;
+            debugger;
         }
+        return node[0].getElementsByTagName(tag).length + tagCount(tag, node.slice(1));
     }
+    // console.log(node);
+    // if(node.length === 0){
+    //     return 0;
+    // }else if(node[0] !== undefined && node[0].hasChildNodes){
+    //     if(node[0].tagName === tag){
+    //         return 1 + tagCount(tag, Array.from(node[0].childNodes) + tagCount(tag, node.slice(1));
+    //     }else{
+    //         return tagCount(tag, node[0].childNodes) + tagCount(tag, node.slice(1));
+    //     }
+    
+    // }else{
+    //     if(node[0] !== undefined && node[0].tagName === tag){
+    //         return 1 + tagCount(tag, node.slice(1));
+    //     }else{
+    //         return tagCount(tag, node.slice(1));
+    //     }
+    // }
 };
 
 // 37. Write a function for binary search.
