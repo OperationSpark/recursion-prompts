@@ -5,31 +5,70 @@
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
 var factorial = function(n) {
+  if (n === 0) { return 1; }
+  if (n < -1) { return null; }
+  if (n === 1) { return 1; }
+  return n * factorial(n - 1);
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
 var sum = function(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+  return array[0] + sum(array.slice(1));
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  if (Array.isArray(array[0])) {
+    return arraySum(array[0]) + arraySum(array.slice(1));
+  }
+  if (array.length === 0) {
+    return 0;
+  }
+  return array[0] + arraySum(array.slice(1));
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n === 0) {
+    return true;
+  }
+  if (n === 1) {
+    return false;
+  }
+  if (n < 0) {
+    n *= -1;
+  }
+  return isEven(n-2)
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if (n === 1 || n === 0 || n === -1) {
+    return 0;
+  }
+  if (n < 0) {
+    return -1 * (sumBelow(-n));
+  }
+  return n-1 + sumBelow(n-1);
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
+  if (x === y || x-1 === y || x+1 === y) {
+    return [];
+  }
+  if (x > y) {
+    return [x-1].concat(range(x-1, y));
+  }
+  return [x+1].concat(range(x+1, y))
 };
 
 // 7. Compute the exponent of a number.
@@ -38,6 +77,17 @@ var range = function(x, y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  if (exp === 1) {
+    return base;
+  }
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp < 0) {
+    exp *= -1;
+    return 1 / (base * exponent(base, exp-1))
+  }
+  return base * exponent(base, exp-1)
 };
 
 // 8. Determine if a number is a power of two.
@@ -45,14 +95,33 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if (n === 1) {
+    return true;
+  }
+  if (n < 1) {
+    return false;
+  }
+  return powerOfTwo(n/2); 
 };
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+  if (string.length === 0) {
+    return '';
+  }
+  return string[string.length-1] + reverse(string.slice(0, string.length-1));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.replace(/\s/g, '').toLowerCase()
+  if (string.length === 0) {
+    return true;
+  }
+  if (string[string.length-1] === string[0]) {
+    return palindrome(string.slice(1, string.length-1));
+  }
+  return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -61,6 +130,32 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+  if (y < 0) {
+    y = y-y-y;
+  }
+  if (y === 0) {
+    return NaN;
+  }
+  if (x === 0) {
+    return 0;
+  }
+  if (x === y || (x - x - x) === y) {
+    return 0;
+  }
+  if (x > 0) {
+    if (x < y) {
+      return x;
+    }
+    return modulo(x-y, y);
+  }
+
+  if (x < 0) {
+    if (x > -y) {
+      return x;
+    }
+    return modulo(x+y, y);
+  }
+  
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
@@ -71,6 +166,7 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+  
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -79,6 +175,10 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (x < 0 || y < 0) { return null }
+  if (x - y  === 0) { return x }
+  if (x > y) { return gcd(x - y, y) }
+  return gcd(y, x);
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -87,32 +187,62 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.length === 0 && str2.length === 0) { return true };
+  if (str1[0] === str2[0]) { return compareStr(str1.slice(1), str2.slice(1)) };
+  return false;
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
+  if (str.length === 0) {
+    return [];
+  }
+  return [str[0]].concat(createArray(str.slice(1)))
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function (array) {
+  if (array.length === 0) {
+    return [];
+  }
+  return [array[array.length-1]].concat(reverseArr(array.slice(0, array.length-1)))
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  if (length === 0) {
+    return [];
+  }
+  return [value].concat(buildList(value, length-1));
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countOccurrence = function(array, value) {
+var countOccurrence = function(array, value, tracker) {
+  //debugger;
+  if (array.length === 0) {
+    return [];
+  }
+  if (tracker) {
+    if (array[0] === value) {
+      return [value].concat(countOccurrence(array.slice(1), value, 1))
+    }
+    return [].concat(countOccurrence(array.slice(1), value, 1));
+  }
+  return [].concat(countOccurrence(array.slice(1), value, 1)).length
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  if (array.length === 1) {
+    return callback(array[0]);
+  }
+  return [callback(array[0])].concat(rMap(array.slice(1), callback))
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -120,6 +250,28 @@ var rMap = function(array, callback) {
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  // debugger;
+  // console.log(keys)
+  // if (keys[0] === key) {
+  //   count++
+  // }
+  // if (typeof obj[keys[0]] === 'object') {
+  //   countKeysInObj(obj[keys[0]], key, count, keys);
+  // }
+  // if (keys.length === 0) {
+  //   return 0;
+  // }
+  // return count + countKeysInObj(obj, key, count, keys.slice(1));
+  let count = 0;
+  for(let k in obj) {
+    if (k === key) {
+      count += 1;
+    }
+    if (typeof obj[k] === 'object') {
+      count += countKeysInObj(obj[k], key);
+    }
+  }
+  return count;
 };
 
 // 22. Write a function that counts the number of times a value occurs in an object.
@@ -127,11 +279,32 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+  let count = 0;
+  for (let key in obj) {
+    if (obj[key] === value) {
+      count += 1;
+    }
+    if (typeof obj[key] === 'object') {
+      count += countValuesInObj(obj[key], value);
+    }
+  }
+  return count;
 };
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, key, newKey) {
+  debugger;
+  for (let k in obj) {
+    if (typeof obj[k] === 'object') {
+      replaceKeysInObj(obj[k], key, newKey);
+    }
+    if (k === key) {
+      obj[newKey] = obj[k];
+      delete obj[k];
+    }
+  }
+  return obj;
 };
 
 // 24. Get the first n Fibonacci numbers.  In the Fibonacci Sequence, each subsequent
