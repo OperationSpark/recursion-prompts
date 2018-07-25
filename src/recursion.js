@@ -579,11 +579,37 @@ var tagCount = function(tag, array) {
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-var binarySearch = function(array, target, min, max) {
+var binarySearch = function(array, target, i = 0) {
+  if (target === array[0]) {
+    return i;
+  }
+  if (array.length === 0) {
+    return null;
+  }
+  return binarySearch(array.slice(1), target, i+1);
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-var mergeSort = function(array) {
+var mergeSort = function(array, duplicate = array.slice(0), newArr = []) {
+  debugger;
+  if (duplicate.length === 0) {
+    return newArr;
+  }
+  let lowest;
+  let index;
+  for (let i = 0; i < duplicate.length; i++) {
+    if (i === 0) {
+      lowest = duplicate[i];
+      index = i;
+    }
+    if (duplicate[i] < lowest) {
+      lowest = duplicate[i];
+      index = i;
+    }
+  }
+  newArr.push(lowest);
+  duplicate.splice(index, 1)
+  return mergeSort(array, duplicate, newArr);
 };
