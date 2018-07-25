@@ -554,14 +554,25 @@ var numToText = function(str) {
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-var tagCount = function(tag, node) {
-  // let mainTags = Array.from($('head')).concat(Array.from($('body')))
-  // console.log(mainTags);
-  // let index = mainTags.length-1
-  // while (index > -1) {
-  //   if (mainTags[0].children() === 0) 
-  // }
-  // // console.log(node)
+var tagCount = function(tag, array) {
+  // concat an array made from the body and head.
+  let count = 0;
+  if (!array) {
+    array = Array.from($('body')).concat(Array.from($('head')));
+  }
+  // console.log($mainElements)
+  // console.log($($mainElements[0]).children());
+  for (let i = 0; i < array.length; i++) {
+    if ($(array[i]).is(tag)) {
+      count += 1;
+    }
+    if ($(array[i]).children()) {
+      let children = Array.from(($(array[i]).children()))
+      count += tagCount(tag, children);
+    }
+  }
+  return count;
+  // if an array is provided
 };
 
 // 37. Write a function for binary search.
