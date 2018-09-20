@@ -4,32 +4,46 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-var factorial = function(n) {
+var factorial = function(n, sum=1, i=n) {
+    if (n < 0) {return null;}
+    if (i === 0) {return sum;}
+    sum *= i;
+    i--;
+    return factorial(n - 1, sum);
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array) {
+var sum = function(array, total=0, i=array.length-1) {
+    if (!array.length) {return 0;}
+    total += array[i];
+    i++;
+    sum(array.slice(1), total, i);
+    return total;
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
+
 };
 
 // 7. Compute the exponent of a number.
