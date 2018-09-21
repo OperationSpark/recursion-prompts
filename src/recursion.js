@@ -17,33 +17,71 @@ n--;
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array, total = 1) {
-   for(let i = 0; i < array.length; i++) {
-       if (array === 0) {
-           return total;
-   }
-    
-   }
-};
+var sum = function(array, total = 0, i = 0) {
+   if(i >= array.length) {
+       return total;
+    }  
+   total += array[i];                                                                                                                       ccccvvvvvv
+   i++;
+   return sum(array, total, i);
 
+};
+/*
+base - if there is nothing left in the array (!array.length)
+run a loop to access array (loop)
+total = array[0] + array[1]
+recursive = sum(array.slice(1)) <--- starts the new loop on 
+the very next element
+
+*/
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = function (n, i = n) {
+    if (i - 2 === 0) {
+        return boolean = true;
+    } else if (i - 2 > 0) {
+        i -= 2;
+        boolean = false;
+        return isEven(n, i, boolean);
+    } else if (i + 2 === 0) {
+        return boolean = true;
+    } else if (i + 2 < 0) {
+        i += 2;
+        boolean = false;
+        return isEven(n, i, boolean);
+    }
+    return boolean;
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+var sumBelow = function (n, sum = 0, i = n) {
+    if (n === 0) { return sum; }
+    if (n > 0) {
+        i = n - 1;
+        sum += i;
+        i--;
+        return sumBelow(n - 1, sum, i);
+    } else if (n < 0) {
+        i = n + 1;
+        sum += i;
+        i++;
+        return sumBelow(n + 1, sum, i);
+    }
+    return sum;
 };
+
+
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
+
 };
 
 // 7. Compute the exponent of a number.
