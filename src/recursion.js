@@ -77,20 +77,20 @@ var range = function(x ,y, arr = []) {
             
     if(x === y ||  arr[arr.length-1] === y - 1 ||  arr[arr.length-1] === y + 1){
         return arr;
-     } 
-     if(x + 1 === y || x - 1 === y){
+    } 
+    if(x + 1 === y || x - 1 === y){
         return arr;
-     }
-     if ( x < y){
+    }
+    if ( x < y){
         arr.push(x + 1);
         x++;
         // one less
-     }
-     if (x > y){
+    }
+    if (x > y){
         arr.push(x - 1);
         x--;
         // one more
-     }
+    }
     return range(x,y, arr);
 };
 
@@ -110,12 +110,12 @@ var exponent = function(base, exp) {
         return 1;
     }
     if(exp < 0){
-        return exponent(base, exp + 1)
+        return 1 / exponent(base, -exp)
     }
     if(exp === 1){
         return base;
     } else {
-        return base * exponent(base, exp - 1);
+        return base *= exponent(base, exp - 1);
     }
 };
 
@@ -137,15 +137,34 @@ var powerOfTwo = function(n) {
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
-    if(!string.length){
+var reverse = function (startString, string = "", newString = '', arr = []) {
+    if (startString.length === 0){
         return string;
+    } else if(startString.length > 0){
+        for (let i = startString.length - 1; i >= 0; i--) {
+            arr.push(startString[i]);
+            newString += arr[0];
+            arr.shift();
+        }
     }
-    return string.split("").reverse(string).join("");
+    return (reverse(string, newString ,arr))
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string) {
+var palindrome = function(string, string2= string) {
+    if(string.length === 0){
+        return false;
+    }
+    
+    if(string[0] === string2[string2.length-1]){
+        string.replace(string.charAt(0), "");
+        string2.replace(string2.charAt(string2.length-1), "");
+        return true;
+    }
+
+    
+
+    return palindrome(string, string2);
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
