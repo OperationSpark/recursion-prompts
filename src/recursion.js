@@ -154,6 +154,9 @@ var palindrome = function(string, i = 0) {
      i++;
     return palindrome(string, i);
     }
+    else {
+        return false;
+    }
  return false;
 };
 
@@ -167,7 +170,20 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
-var multiply = function(x, y) {
+var multiply = function(x, y, total = 0, i = y) {
+if(x === 0 || y === 0) {return 0;}
+if(i === 0 && y > 0) {return total;}
+if(i === 0 && y < 0) {return -total;}
+if(y > 0) {
+    total += x;
+    i--; 
+    return multiply(x,y,total,i);
+} 
+if(y < 0) {
+    total += x;
+    i++;
+    return multiply(x,y,total, i);
+}
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -188,33 +204,73 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
-var compareStr = function(str1, str2) {
+var compareStr = function(str1, str2, i = 0) {
+    if(i === str2.length && i === str1.length) {return true;}
+    if(str1.charAt(i) !== str2.charAt(i)) {
+        return false;
+    } else if(str1.charAt(i) === str2.charAt(i)) {
+        i++;
+        return compareStr(str1, str2, i);
+    }
+    return true;
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = function(str, array = [], i = 0){
+    if(i === str.length) {return array;}
+    if(str.charAt(i)) {
+        array.push(str.charAt(i));
+        i++;
+        return createArray(str, array, i);
+    }
+    
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
-};
+var reverseArr = function (array , i = array.length - 1, newArr = []) {
+if(i === - 1) {return newArr;}
+    if(i >= 0) {
+        newArr.push(array[i]);
+        i--;
+        return reverseArr(array, i, newArr);
+    }
+}; 
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length) {
+var buildList = function(value, length, array = [], i = 0) {
+    if(i === length) {return array;}
+    array.push(value);
+    i++;
+    return buildList(value,length, array, i);
+
+
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countOccurrence = function(array, value) {
+var countOccurrence = function(array, value, i = 0, x = 0) {
+if(i === array.length) {return x;}
+    if(array[i] === value) {
+        i++;
+        x++;   
+        return countOccurrence(array,value, i, x);
+    } else {
+        i++;
+        return countOccurrence(array,value,i,x);
+    }
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
-var rMap = function(array, callback) {
+var rMap = function(array, callback, i = 0, newArr = []) {
+    if(i === array.length) {return newArr;}
+    newArr.push(callback(array[i]));
+    i++;
+    return rMap(array, callback, i, newArr);
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -249,7 +305,15 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function(n, i = 0, array = [], total = 0,) {
+    if(array[i] === n) {return n;}
+    if(i > n) {return null;}
+    
+     array[i] = total += n; 
+     array.push(n);
+     i++;
+    return nthFibo(n,i,array, total);
+   
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
