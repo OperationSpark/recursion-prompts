@@ -238,11 +238,27 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
-var compareStr = function(str1, str2) {
+var compareStr = function(str1, str2,  i = 0) {
+
+    if(str1[i] !== str2[i]){
+        return false;
+    }
+
+    if (i === str1.length && i === str2.length) {
+        return true;
+    }
+    
+
+    if(str1[i] === str2[i]){
+        i++;
+    }
     
 
 
-    //return compareStr(str1, str2)
+    return compareStr(str1, str2, i);
+
+
+    
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
@@ -278,19 +294,24 @@ var reverseArr = function (array, arr = []) {
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length, arr = []) {
+var buildList = function (value, length, arr = [], i = 0) {
 
-    if(value === length){
+
+    if (value === undefined) {
+        return [undefined];
+    }
+    if (i === length) {
         return arr;
     }
 
-    if(value !== length){
+    if (arr[i] !== value) {
         arr.push(value);
+
     }
+    i++;
 
-    
 
-    return buildList(value, length, arr);
+    return buildList(value, length, arr, i);
 };
 
 // 19. Count the occurence of a value inside a list.
@@ -313,6 +334,7 @@ var countOccurrence = function(array, value, count = 0, i = 0) {
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -347,22 +369,68 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function(n, next = 0, arr = [0], i = 1) {
+    if(n<0){
+        return null;
+    }
+
+    if(arr[n]){
+        return arr[n];
+    }
+
+    
+
+    next = next+ i;
+    i=next;
+
+    arr.push(next);
+
+    return nthFibo(n, next, arr,i);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-var capitalizeWords = function(input) {
-   
+var capitalizeWords = function(input, i = 0, arr = []) {
+    if(i === input.length){
+        return arr;
+    }
     
+    // if(input.length > 0 ){
+    //     input[i].toUpperCase();
+    // }
+
+    // i++;
+
+    arr.push(input[i].toUpperCase());
+    i++;
+
+    return capitalizeWords(input, i, arr);
     
-    return input;
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
+var capitalizeFirst = function(array, i = 0, arr = [],n = 1,x,y,z) {
+    if(i === array.length){
+        return arr;
+    }
+
+
+    // x = array[i].charAt(0).toUpperCase();
+    x = array[i].slice(0,1).toUpperCase();
+    y = array[i].slice(1);
+    //concat/join it together
+
+    z = x.concat(y);
+    arr.push(z);
+    i++;
+    n++;
+
+    //access element in array then charAt(0).touppercase
+    //increment up 
+
+    return capitalizeFirst(array, i, arr, n,x,y,z);
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
@@ -384,7 +452,18 @@ var flatten = function(arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
+var letterTally = function(str, obj, object = {}, tally = 1) {
+    
+    // if(letter is not in object){
+    //     object.letter = tally;
+    //    
+    // }
+    //tally++ only if letter is seen again
+
+
+    return object;
+
+    //return letterTally(str, obj,object,tally);
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -392,7 +471,8 @@ var letterTally = function(str, obj) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
+var compress = function(list, arr = []) {
+    return arr;
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
@@ -404,14 +484,20 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array) {
+var minimizeZeroes = function(array, arr = []) {
+    return arr;
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array) {
+var alternateSign = function(array, arr = []) {
+    return arr;
+
+
+
+
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
