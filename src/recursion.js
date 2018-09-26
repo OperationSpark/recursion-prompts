@@ -310,9 +310,8 @@ var capitalizeWords = function (input, array = [], i = 0) {
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
 var capitalizeFirst = function (array, newArr = [], i = 0) {
-    if (array.length === newArr.length) {return array;}
-    newArr.push(array[i]);
-    newArr.charAt(0).toUpperCase();
+    if (array.length === newArr.length) { return newArr; }
+    newArr.push(array[i].charAt(0).toUpperCase() + array[i].slice(1));
     i++;
     return capitalizeFirst(array, newArr, i);
 };
@@ -336,7 +335,22 @@ var flatten = function (arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function (str, obj) {
+var letterTally = function (string, object = {}, array = [], i = 0, key = array[i]) {
+    if (i === string.length) { return object; }
+    if (string.length > array.length) {
+        array.push(string.charAt(i));
+        i++;
+        return letterTally(string, object, array, i, array[i]);
+    }
+
+    if (array.length === string.length) {
+        i = 0;
+        object[key] = countOccurrence(array, array[i], i);
+        return letterTally(string, object, array, i, array[i]);
+    }
+
+return object;
+
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -363,7 +377,7 @@ var minimizeZeroes = function (array) {
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function (array) {
+var alternateSign = function (array, i = 1, newArr = [array[0]]) {
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
