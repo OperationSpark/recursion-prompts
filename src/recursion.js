@@ -334,6 +334,12 @@ var countOccurrence = function(array, value, count = 0, i = 0) {
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+    if (array.length === 1) {
+        return callback(array);
+    }
+    else {
+        return [callback(array[0])].concat(rMap(array.slice(1), callback))
+    }
 
 };
 
@@ -452,18 +458,26 @@ var flatten = function(arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj, object = {}, tally = 1) {
+var letterTally = function(str, obj = {}, tally = 0, i = 0) {
+
+    let letters = str.split('');
+  
     
-    // if(letter is not in object){
-    //     object.letter = tally;
-    //    
-    // }
-    //tally++ only if letter is seen again
+    let arrOfObjKeys = Object.keys(obj);
 
+    if (i === letters.length) {
+        
+        return obj;
+    }
+    
 
-    return object;
-
-    //return letterTally(str, obj,object,tally);
+    if (!obj[letters[i]]){
+        obj[letters[i]] = 1;
+    }else{
+        obj[letters[i]] += 1;
+    }
+    i++;
+    return letterTally(str, obj, tally, i);
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -471,8 +485,17 @@ var letterTally = function(str, obj, object = {}, tally = 1) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list, arr = []) {
-    return arr;
+var compress = function(list, arr = [],i = 0) {
+
+    if(i === list.length){
+        return arr;
+    }
+    if(list[i]  ){
+        arr.push(list[i]);
+    }
+
+    i++;
+    return compress(list, arr, i)
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
@@ -484,19 +507,37 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array, arr = []) {
-    return arr;
+var minimizeZeroes = function(array, arr = [], i= 0, n =1) {
+
+    if(i === array.length){
+        return arr;
+    }
+    
+    if(array[i] !== array[n]){
+        arr.push(array[i]);
+    }
+    
+
+    
+    i++;
+    n++;
+
+    return minimizeZeroes(array, arr, i , n)
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array, arr = []) {
+var alternateSign = function(array, arr = [], i = 0) {
     return arr;
 
 
+    // arr.push(array[i]);
+    // i++;
 
+
+    //return alternateSign(array, arr,i);
 
 };
 
