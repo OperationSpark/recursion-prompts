@@ -177,14 +177,25 @@ var reverse = function(string) {
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function(string, value = false) {
-    string = string[0].toLowerCase();
+var palindrome = function(string) {
     
-    string = string.split('');
-    
-    return true;
+    if (string.length === undefined) {
+        return false;
+    }
 
-    //return palindrome(string);
+    if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
+        return true;
+    }
+
+    
+    
+    
+    
+    string = string.slice(0,1);
+    string = string.slice(string.length-1,1)
+
+
+    return palindrome(string);
 
     
 };
@@ -203,17 +214,25 @@ var multiply = function(x, y, i=0, total) {
     if(x === 0 || y===0){
         return 0;
     }
+    if (i === y) {
+        return total;
+    }
+    if(x === 1){
+        return y;
+    }
+    if(y ===1){
+        return x;
+    }
     if(x<0 && y<0){
         total = (x - x) ;
-        //increment or decrement
+        i--;
     }
     if(x<0 || y< 0){
-        total = x - x;
-        //increment or decrement
+        total = x + x;
+        i++;
     }
-    if(y === i){
-      return total;
-    }
+    
+
     total = x + x;
     i++;
 
@@ -375,23 +394,25 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n, next = 0, arr = [0], i = 1) {
-    if(n<0){
+var nthFibo = function (n, fibSeq = [0, 1]) {
+    let nexnum = fibSeq[fibSeq.length - 1] + fibSeq[fibSeq.length - 2];
+    fibSeq.push(nexnum);
+
+
+    if (n < 0) {
         return null;
     }
-
-    if(arr[n]){
-        return arr[n];
+    if (!n) {
+        return 0;
     }
 
-    
 
-    next = next+ i;
-    i=next;
+    if (fibSeq.length - 2 === n) {
+        return fibSeq[n];
+    } else {
+        return nthFibo(n, fibSeq);
+    }
 
-    arr.push(next);
-
-    return nthFibo(n, next, arr,i);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
@@ -490,7 +511,7 @@ var compress = function(list, arr = [],i = 0) {
     if(i === list.length){
         return arr;
     }
-    if(list[i]  ){
+    if(list[i] !== arr[arr.length-1]){
         arr.push(list[i]);
     }
 
@@ -529,16 +550,29 @@ var minimizeZeroes = function(array, arr = [], i= 0, n =1) {
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array, arr = [], i = 0) {
-    return arr;
+var alternateSign = function (array, i = 0) {
+    i++;
+    var el = array[i];
+
+    if (i === array.length) {
+        return array;
+    }
+
+    if (array[0] < 0) {
+        array[0] *= -1;
+    }
 
 
-    // arr.push(array[i]);
-    // i++;
+    if (el > 0 && i % 2 === 1) {
+        array[i] = array[i] * -1;
+    }
+    if (el < 0 && i % 2 === 0) {
+        array[i] *= -1;
+    }
 
 
-    //return alternateSign(array, arr,i);
 
+    return alternateSign(array, i);
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
