@@ -134,15 +134,22 @@ var reverse = function (string) {
 
 */
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function (string, i = string.length) {
-    if( string = string.substr(1) + string.charAt(0)) {return true;}
-    else if(!reverse(string)) {
-        return reverse(string.substr(1, string.length - 1));
-    } else {
-        return false;
+var palindrome = function (string) {
+   /* if (string) { return true; }
+    else {return false;}
+        string = string.substr(1) + string.charAt(0);
+        return palindrome(string);
+        /*
+  /* --------------------------------------------------------*/
+     if (!reverse(string)) { return false;}
+    else {
+        return true;
     }
     
-    return palindrome(string,i);
+    return palindrome(string);
+
+
+
 };
 
 
