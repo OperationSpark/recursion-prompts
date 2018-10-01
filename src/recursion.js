@@ -249,7 +249,6 @@ var buildList = function(value, length, arr = [],index = 0) {
     }
     index++;
     return buildList(value, length, arr, index);
-    
 };
 
 // 19. Count the occurence of a value inside a list.
@@ -306,6 +305,7 @@ var replaceKeysInObj = function(obj, key, newKey) {
 // fibonacci(5);  // [0, 1, 1, 2, 3, 5]
 // Note:  The 0 is not counted.
 var fibonacci = function(n) {
+    
 };
 
 // 25. Return the Fibonacci number located at index n of the Fibonacci sequence.
@@ -313,18 +313,45 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function(n, fibArr = [0,1]) {
+    let nextNum = fibArr[fibArr.length - 1] + fibArr[fibArr.length - 2];
+    fibArr.push(nextNum);
+     if (n < 0) {
+        return null;
+    }
+    if (!n) {
+        return 0;
+    }
+    if (fibArr.length - 2 === n) {
+        return fibArr[n];
+    } else {
+        return nthFibo(n, fibArr);
+    }
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-var capitalizeWords = function(input) {
+var capitalizeWords = function(input, index = 0, arr = []) {
+if(index === input.length){
+    return arr;
+}
+arr.push(input[index].toUpperCase());
+index = index + 1;
+
+return capitalizeWords(input, index, arr);
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
+var capitalizeFirst = function(array, index = 0, arr = []) {
+    if(index === array.length){
+        return arr;
+    }
+    arr.push(array[index].charAt(0).toUpperCase() + array[index].slice(1));
+    index = index + 1;
+
+    return capitalizeFirst(array, index, arr)
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
@@ -346,7 +373,20 @@ var flatten = function(arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
+var letterTally = function(str, obj = {},num = 0, index = 0) {
+    let letters = str.split('');
+    let arrOfObjKeys = Object.keys(obj);
+
+    if (index === letters.length) {
+        return obj;
+    }
+    if (!obj[letters[index]]){
+        obj[letters[index]] = 1;
+    }else{
+        obj[letters[index]] += 1;
+    }
+    index= index + 1;
+    return letterTally(str, obj, num, index);  
 };
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
@@ -354,7 +394,25 @@ var letterTally = function(str, obj) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
+var compress = function(list, arr = [], index = 0) {
+    // if(index === list.length){
+    //     return arr;
+    // }
+    // if(list[index] !== arr[arr.length-1]){
+    //     arr.push(list[index]);
+    // }
+    // index = index + 1;
+    // return compress(list, arr, index)
+
+    if(index === list.length){
+        return arr;
+    }
+    if(list[index] !== arr[arr.length-1]){
+        arr.push(list[index]);
+    }
+
+    index++;
+    return compress(list, arr, index)
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
