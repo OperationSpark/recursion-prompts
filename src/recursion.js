@@ -179,22 +179,18 @@ var reverse = function(string) {
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
     
-    if (string.length === undefined) {
-        return false;
-    }
-
-    if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
+    if (string.length <= 1) {
         return true;
     }
 
-    
-    
-    
-    
-    string = string.slice(0,1);
-    string = string.slice(string.length-1,1)
+    if (string[0].toLowerCase() !== string[string.length - 1].toLowerCase()) {
+        return false;
+        
+    }
 
-
+    string = string.substr(1,string.length-2);
+    string = string.replace(' ' , '');
+    
     return palindrome(string);
 
     
@@ -223,6 +219,7 @@ var multiply = function(x, y, i=0, total) {
     if(y ===1){
         return x;
     }
+
     if(x<0 && y<0){
         total = (x - x) ;
         i--;
@@ -231,6 +228,7 @@ var multiply = function(x, y, i=0, total) {
         total = x + x;
         i++;
     }
+    
     
 
     total = x + x;
