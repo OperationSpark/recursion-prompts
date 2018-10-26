@@ -206,35 +206,26 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
-var multiply = function(x, y, i=0, total) {
+var multiply = function(x, y) {
     if(x === 0 || y===0){
         return 0;
     }
-    if (i === y) {
-        return total;
+    if (y === 1) {
+        return x;
     }
     if(x === 1){
         return y;
     }
-    if(y ===1){
+    if(y === 1){
         return x;
     }
-
-    if(x<0 && y<0){
-        total = (x - x) ;
-        i--;
+    if(y<0){
+        return -multiply(x, -y);
     }
-    if(x<0 || y< 0){
-        total = x + x;
-        i++;
-    }
-    
-    
 
-    total = x + x;
-    i++;
+    y--;
 
-    return multiply(x,y,i, total);
+    return x + multiply(x, y);
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
