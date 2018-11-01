@@ -130,21 +130,15 @@ var reverse = function (string) {
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-var palindrome = function (string, boolean = false, reverseString = function (string) {
-    if (string === "") { return ""; }
-    else { return reverseString(string.substr(1)) + string.charAt(0); }
-}, i = 0) {
-
-    if (string.charAt(0) === reverseString(string).charAt(0 + i)) {
-        i++;
-        return palindrome(string.slice(1));
-    } else if (string.charAt(0) !== reverseString(string).charAt(0)) {
-        return true;
+var palindrome = function (string) {
+    if (string.length <= 1) { return true; }
+    if (string[0].toLowerCase() !== string[string.length - 1].toLowerCase()) {
+        return false;
     }
-    // [1, 2, 3, 4, 5, 6]
-    // i = 0;
-    // x = string.length - (i + 1);
-};
+    string = string.substr(1, string.length - 2);
+    string = string.replace(' ', '');
+    return palindrome(string);
+}
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
@@ -335,30 +329,29 @@ var flatten = function (arrays) {
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function (string, object = {}, array = [], i = 0, key = array[i]) {
-    if (i === string.length) { return object; }
-    if (string.length > array.length) {
-        array.push(string.charAt(i));
-        i++;
-        return letterTally(string, object, array, i, array[i]);
+var letterTally = function (str, obj = {}, tally = 0, i = 0) {
+    let letters = str.split('');
+    let arrOfObjKeys = Object.keys(obj);
+    if (i === letters.length) { return obj; }
+    if (!obj[letters[i]]) { obj[letters[i]] = 1; }
+    else {
+        obj[letters[i]] += 1;
     }
-
-    if (array.length === string.length) {
-        i = 0;
-        object[key] = countOccurrence(array, array[i], i);
-        return letterTally(string, object, array, i, array[i]);
-    }
-
-return object;
-
+    i++;
+    return letterTally(str, obj, tally, i);
 };
+
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
 // elements they should be replaced with a single copy of the element. The order of the
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function (list) {
+var compress = function (list, arr = [], i = 0) {
+    if (i === list.length) { return arr; }
+    if (list[i] !== arr[arr.length - 1]) { arr.push(list[i]); }
+    i++;
+    return compress(list, arr, i);
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
@@ -370,14 +363,31 @@ var augmentElements = function (array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function (array) {
+var minimizeZeroes = function(array, arr = [], i= 0, n =1) {
+    if(i === array.length){
+        return arr;
+    }
+    if(array[i] !== array[n]){
+        arr.push(array[i]);
+    }    
+    i++;
+    n++;
+    return minimizeZeroes(array, arr, i , n)
 };
+
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function (array, i = 1, newArr = [array[0]]) {
+var alternateSign = function (array, i = 0) {
+    i++;
+    var el = array[i];
+    if (i === array.length) { return array; }
+    if (array[0] < 0) { array[0] *= -1; }
+    if (el > 0 && i % 2 === 1) { array[i] = array[i] * -1; }
+    if (el < 0 && i % 2 === 0) { array[i] *= -1; }
+    return alternateSign(array, i);
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
