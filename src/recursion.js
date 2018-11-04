@@ -140,19 +140,16 @@ var palindrome = function(string) {
         return true;
     }
 
-    let lastLetter = string[string.length - 1];
-    let firstLetter = string[0];
-    const stringMiddle = palindrome(string.substring(1, string.length - 1));
-
-    
-    if (lastLetter == firstLetter) {
-        return stringMiddle;
-    } else if (lastLetter != firstLetter) {
-        return false
-    } else if (lastLetter || firstLetter === " " ) {
-        return stringMiddle;
-
+    if (string[0].toLowerCase() !== string[string.length - 1].toLowerCase()) {
+        return false;
+        
     }
+
+    string = string.substr(1,string.length-2);
+    string = string.replace(' ' , '');
+    
+    return palindrome(string);
+
     
     
 
@@ -226,14 +223,17 @@ var createArray = function(str, arr = []){
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
-    if (array.length <= 1) {
-        return array
+var reverseArr = function (array, arr = []) {
+    if (array.length === 0) {
+        return arr
     }
-    const lastEl = array[array.length - 1];
-    const firstEl = array[0];
-    const arrReverse = reverseArr(array.slice(1, array.length - 1));
-    return lastEl + arrReverse + firstEl;
+    if(array.length > 0 ){
+        arr.push(array[array.length-1]);
+    }
+
+    array.splice(array.length-1,1);
+
+    return reverseArr(array, arr);
 };
 
 // 18. Create a new array with a given value and length.
@@ -424,14 +424,37 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array) {
+var minimizeZeroes = function(array,arr = [],i = 0) {
+    if (i === array.length) { return arr; }
+   if (array[i] !== 0) {
+       arr.push(array[i]);
+   } else if (array[i] === 0 && arr[arr.length - 1] != 0) {
+       arr.push(array[i]);
+   }
+   i++;
+   return minimizeZeroes(array, arr, i);
+   (array, arr = [], i = 0)
 };
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-var alternateSign = function(array) {
+var alternateSign = function(array, newArr = [], i = 0, sign = 1) {
+    if (array.length === newArr.length) { return newArr; }
+   newArr.push(array[i]);
+   if (newArr[i] > 0) {
+       newArr[i] *= sign;
+       i++;
+       return alternateSign(array, newArr, i, -sign);
+   } else if (newArr[i] === 0) {
+       i++;
+       return alternateSign(array, newArr, i, -sign);
+   } else {
+       newArr[i] *= -sign;
+       i++;
+       return alternateSign(array, newArr, i, -sign);
+   }
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
