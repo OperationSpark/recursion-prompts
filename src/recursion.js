@@ -37,21 +37,52 @@ var arraySum = function(array) {
   }
 
   if (Array.isArray(array[0])){
-    arraySum(array[0]) // continue logic here
+    var sum = arraySum(array[0]) // continue logic here
+  }
+  else {
+    var sum = array[0]
   }
 
-  return array[0]+arraySum(array.slice(1))
+  return sum + arraySum(array.slice(1))
 
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  if (n === 0) {
+    return true
+  }
+  else if (n === 1) {
+    return false
+  }
+  if (Math.sign(n) === -1) {
+    return isEven(n + 2)
+  }
+  else {
+    return isEven(n - 2)
+  }
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if (n === 0) {
+    return 0
+  }
+  if (Math.sign(n) === -1){
+    var currentN = n + 1}
+    else{
+    var currentN = n - 1}
+  if (currentN === 0){
+    return 0
+  }
+  if (Math.sign(currentN) === -1) {
+    return currentN + sumBelow(currentN)
+  }
+  else {
+    return currentN + sumBelow(currentN)
+  }
 };
 
 // 6. Get the integers in range (x, y).
