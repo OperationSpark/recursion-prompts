@@ -175,12 +175,47 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
-//debugger;
-if (y > x){
+  if( x === 0 && y === 0){
+    return NaN
+  }
+
+  if (x >= 0 && y >= 0){
+
+    if (y > x){
+      return x
+    }else if(y <= x){
+      return modulo(x-y, y)
+    }
+  
+  }
+  
+  if (x < 0 && y < 0){
+  
+    if (y < x){
+      return x
+    }else if(y >= x){
+      return modulo(x-y, y)
+    }
+  
+  }
+  
+  if (x < 0 && y > 0){
+  
+    if (y < x){
+      return x
+    }else if(y >= x){
+  
+  var negativeXModulo = modulo(y+x, y)
+  
+  
+  if(x < y && negativeXModulo > 0){
   return x
-}else if(y < x){
-  return modulo(x-y, y)
-}
+  }else{
+  return negativeXModulo
+  }
+  
+    }
+  }
 
 };
 

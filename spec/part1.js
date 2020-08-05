@@ -476,7 +476,7 @@
 
 
 
-    xdescribe('13. Divide', function() {
+    describe('13. Divide', function() {
 
       it('should return a number', function() {
         expect(typeof(divide(5,2))).to.equal('number');
@@ -512,7 +512,7 @@
 
 
 
-    xdescribe('14. Greatest Common Divisor', function() {
+    describe('14. Greatest Common Divisor', function() {
 
       it('should return a number', function() {
         expect(typeof(gcd(4,36))).to.equal('number');
