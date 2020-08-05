@@ -88,6 +88,21 @@ var sumBelow = function(n) {
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
+ //debugger;
+
+  if (x === y || x-1 === y || x+1 === y || y === undefined){
+    return[]
+  }
+
+  if(x < y){
+    var nextX = x+1
+  }
+  if(x > y){
+    var nextX = x-1
+  }
+
+  return [nextX].concat(range(nextX, y))
+
 };
 
 // 7. Compute the exponent of a number.
@@ -96,6 +111,19 @@ var range = function(x, y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+
+  if (exp === 0){
+    return 1
+  }
+  if (exp === 1){
+    return base
+  }
+  if (exp > 0){
+    return base * exponent(base, exp-1)
+  }
+  if (exp < 0){
+    return 1 / exponent(base, (-1*exp))
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -103,14 +131,42 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+
+  if(n === 1){
+    return true
+  }else if(n % 2 !== 0 || n === 0){
+    return false
+  }
+
+  return powerOfTwo(n/2)
 };
 
-// 9. Write a function that accepts a string a reverses it.
+// 9. Write a function that accepts a string and reverses it.
 var reverse = function(string) {
+
+if (Array.isArray(string)){
+  var reversedText = string.reverse() 
+  return reversedText.join("")
+}else{
+  var text = string
+  var textArr = text.split("")
+  return reverse(textArr)
+}
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+
+  if (Array.isArray(string)){
+    var reversedText = string.reverse() 
+    return reversedText.join("")
+  }else{
+    var correctString = string.toLowerCase()
+    var correctString1 = correctString.replace(/\s+/g, '');
+    return (correctString1 === palindrome(correctString1.split("")))
+  }
+
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -119,6 +175,13 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+//debugger;
+if (y > x){
+  return x
+}else if(y < x){
+  return modulo(x-y, y)
+}
+
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or

@@ -402,7 +402,7 @@
 
 
 
-    xdescribe('11. Modulo', function() {
+    describe('11. Modulo', function() {
 
       it('should return a number', function() {
         expect(typeof(modulo(5,2))).to.equal('number');
