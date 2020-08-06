@@ -214,10 +214,14 @@ if (y === 1){
   return x
 }
 
+if (y === 0 || x === 0){
+  return 0
+}
+
 if (y > 0){
   return x+multiply(x, y-1)
-}else if (y <= 0 && x < 0){
-  return x-multiply(x, y+1) // problem with -275, -502; returns 0.
+}else if (y < 0 && x < 0){
+  return multiply(x, y+1)-x
 }else if (y < 0){
   return x+multiply(x, y+1)
 }
@@ -227,6 +231,45 @@ if (y > 0){
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
+if (y === 0){
+  return NaN
+}
+
+if (x === 0){
+  return 0
+}
+
+if (y === 1){
+  return x
+}
+
+if (x < 0 && y < 0){
+  if (y < x){
+    return 0
+  }
+}
+
+if (y > x){
+  return 0
+}
+
+if (y === x){
+  return 1
+}
+
+if (x > 0 && y > 0){
+  return 1+divide(x-y, y)
+}
+
+if (x < 0 && y < 0){
+  return 1+divide(x-y, y)
+}
+
+if (x < 0 && y > 0){
+  return 1+divide(x+y, y)
+}
+
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
