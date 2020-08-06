@@ -278,6 +278,29 @@ if (x < 0 && y > 0){
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (Math.sign(x) === -1 || Math.sign(y) === -1) {
+    return null
+  }
+
+  if (x === 0){
+    return y
+  }
+  
+  if(y === 0){
+    return x
+  }
+  
+  if (x > y){
+    if(x === (y * ~~(x/y)+(x % y))){
+      return gcd(y, (x % y))
+    }
+  }
+  
+  if (y > x){
+    if(y === (x * ~~(y/x)+(y % x))){
+      return gcd(x, (y % x))
+    }
+  } 
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -286,6 +309,23 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (Array.isArray(str1) && Array.isArray(str2)){
+
+    if (str1.length === str2.length){
+
+      for (i = 0; i < str1.length; i++){
+        if (str2[i] !== str1[i]){
+          return false
+        }
+      }
+
+    return true
+    }else{
+      return false
+    }
+    }else{
+
+  return compareStr(str1.split(""), str2.split(""))}
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
