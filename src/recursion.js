@@ -4,37 +4,44 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-const factorial = function (n) {
-  
+let factorial = function (n, output=1) {
+  if (n === 0){
+    return output;
+  }
+  if (n < 0){
+    return null
+  }
+  output *= n;
+  return factorial(n - 1, output);
 };
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-const sum = function (array) {
+let sum = function (array) {
 
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
-const arraySum = function (array) {
+let arraySum = function (array) {
 
 };
 
 // 4. Check if a number is even.
-const isEven = function (n) {
+let isEven = function (n) {
 
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-const sumBelow = function (n) {
+let sumBelow = function (n) {
 
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-const range = function (x, y) {
+let range = function (x, y) {
 
 };
 
@@ -43,7 +50,7 @@ const range = function (x, y) {
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-const exponent = function (base, exp) {
+let exponent = function (base, exp) {
 
 };
 
@@ -51,17 +58,17 @@ const exponent = function (base, exp) {
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
-const powerOfTwo = function (n) {
+let powerOfTwo = function (n) {
 
 };
 
 // 9. Write a function that accepts a string a reverses it.
-const reverse = function (string) {
+let reverse = function (string) {
 
 };
 
 // 10. Write a function that determines if a string is a palindrome.
-const palindrome = function (string) {
+let palindrome = function (string) {
 
 };
 
@@ -70,20 +77,20 @@ const palindrome = function (string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-const modulo = function (x, y) {
+let modulo = function (x, y) {
 
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
-const multiply = function (x, y) {
+let multiply = function (x, y) {
 
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
-const divide = function (x, y) {
+let divide = function (x, y) {
 
 };
 
@@ -92,7 +99,7 @@ const divide = function (x, y) {
 // Example:  gcd(4,36);  // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
-const gcd = function (x, y) {
+let gcd = function (x, y) {
 
 };
 
@@ -101,38 +108,38 @@ const gcd = function (x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
-const compareStr = function (str1, str2) {
+let compareStr = function (str1, str2) {
 
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-const createArray = function (str) {
+let createArray = function (str) {
 
 };
 
 // 17. Reverse the order of an array
-const reverseArr = function (array) {
+let reverseArr = function (array) {
 
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-const buildList = function (value, length) {
+let buildList = function (value, length) {
 
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-const countOccurrence = function (array, value) {
+let countOccurrence = function (array, value) {
 
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
-const rMap = function (array, callback) {
+let rMap = function (array, callback) {
 
 };
 
@@ -140,7 +147,7 @@ const rMap = function (array, callback) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
-const countKeysInObj = function (obj, key) {
+let countKeysInObj = function (obj, key) {
 
 };
 
@@ -148,13 +155,13 @@ const countKeysInObj = function (obj, key) {
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // countValuesInObj(testobj, 'r') // 2
 // countValuesInObj(testobj, 'e') // 1
-const countValuesInObj = function (obj, value) {
+let countValuesInObj = function (obj, value) {
 
 };
 
 // 23. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
-const replaceKeysInObj = function (obj, key, newKey) {
+let replaceKeysInObj = function (obj, key, newKey) {
 
 };
 
@@ -163,7 +170,7 @@ const replaceKeysInObj = function (obj, key, newKey) {
 // Example:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5);  // [0, 1, 1, 2, 3, 5]
 // Note:  The 0 is not counted.
-const fibonacci = function (n) {
+let fibonacci = function (n) {
 
 };
 
@@ -172,20 +179,20 @@ const fibonacci = function (n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-const nthFibo = function (n) {
+let nthFibo = function (n) {
 
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-const capitalizeWords = function (input) {
+let capitalizeWords = function (input) {
 
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-const capitalizeFirst = function (array) {
+let capitalizeFirst = function (array) {
 
 };
 
@@ -198,19 +205,19 @@ const capitalizeFirst = function (array) {
 //   e: {e: {e: 2}, ee: 'car'}
 // };
 // nestedEvenSum(obj1); // 10
-const nestedEvenSum = function (obj) {
+let nestedEvenSum = function (obj) {
 
 };
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
-const flatten = function (arrays) {
+let flatten = function (arrays) {
 
 };
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-const letterTally = function (str, obj) {
+let letterTally = function (str, obj) {
 
 };
 
@@ -219,21 +226,21 @@ const letterTally = function (str, obj) {
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-const compress = function (list) {
+let compress = function (list) {
 
 };
 
 // 32. Augment every element in a list with a new value where each element is an array
 // itself.
 // Example: augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
-const augmentElements = function (array, aug) {
+let augmentElements = function (array, aug) {
 
 };
 
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-const minimizeZeroes = function (array) {
+let minimizeZeroes = function (array) {
 
 };
 
@@ -241,21 +248,21 @@ const minimizeZeroes = function (array) {
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
-const alternateSign = function (array) {
+let alternateSign = function (array) {
 
 };
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
-const numToText = function (str) {
+let numToText = function (str) {
 
 };
 
 // *** EXTRA CREDIT ***
 
 // 36. Return the number of times a tag occurs in the DOM.
-const tagCount = function (tag, node) {
+let tagCount = function (tag, node) {
 
 };
 
@@ -263,14 +270,14 @@ const tagCount = function (tag, node) {
 // Sample array:  [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // console.log(binarySearch(5)) will return '5'
 
-const binarySearch = function (array, target, min, max) {
+let binarySearch = function (array, target, min, max) {
 
 };
 
 // 38. Write a merge sort function.
 // Sample array:  [34,7,23,32,5,62]
 // Sample output: [5,7,23,32,34,62]
-const mergeSort = function (array) {
+let mergeSort = function (array) {
 
 };
 
