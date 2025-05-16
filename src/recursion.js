@@ -4,15 +4,8 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-let factorial = function (n, output=1) {
-  if (n === 0){
-    return output;
-  }
-  if (n < 0){
-    return null
-  }
-  output *= n;
-  return factorial(n - 1, output);
+let factorial = function (n) {
+
 };
 
 // 2. Compute the sum of an array of integers.
@@ -78,7 +71,7 @@ let palindrome = function (string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 let modulo = function (x, y) {
-
+  
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
