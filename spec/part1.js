@@ -312,7 +312,7 @@
 
         expect(reverse('Racecar')).to.equal('racecaR');
         expect(reverse(poem)).to.equal(
-          '.uoy ot gnoleb era esab ym lla ,eulb era steloiv ,der era sesoR'
+          '.uoy ot gnoleb era esab ym lla ,eulb era steloiv ,der era sesoR',
         );
       });
 
@@ -620,20 +620,20 @@
     describe('19. Count value in array', () => {
       it('should return a number', () => {
         expect(typeof countOccurrence([2, 7, 4, 4, 1, 4], 4)).to.equal(
-          'number'
+          'number',
         );
         expect(
-          typeof countOccurrence([2, 'banana', 4, 4, 1, 'banana'], 'banana')
+          typeof countOccurrence([2, 'banana', 4, 4, 1, 'banana'], 'banana'),
         ).to.equal('number');
       });
 
       it('should return the number of occurrences of the value', () => {
         expect(countOccurrence([2, 7, 4, 4, 1, 4], 4)).to.eql(3);
         expect(
-          countOccurrence([2, 'banana', 4, 4, 1, 'banana'], 'banana')
+          countOccurrence([2, 'banana', 4, 4, 1, 'banana'], 'banana'),
         ).to.eql(2);
         expect(
-          countOccurrence([undefined, 7, undefined, 4, 1, 4], undefined)
+          countOccurrence([undefined, 7, undefined, 4, 1, 4], undefined),
         ).to.eql(2);
         expect(countOccurrence(['', 7, null, 0, '0', false], 0)).to.eql(1);
         expect(countOccurrence(['', 7, null, 0, '0', false], false)).to.eql(1);
@@ -889,7 +889,7 @@
     describe('26. Capitalize words in array', () => {
       it('should return an array', () => {
         expect(
-          Array.isArray(capitalizeWords(['i', 'am', 'learning', 'recursion']))
+          Array.isArray(capitalizeWords(['i', 'am', 'learning', 'recursion'])),
         ).to.equal(true);
       });
 
@@ -901,7 +901,7 @@
           'RECURSION',
         ]);
         expect(capitalizeWords(['ceci', "n'est", 'pas', 'une', 'pipe'])).to.eql(
-          ['CECI', "N'EST", 'PAS', 'UNE', 'PIPE']
+          ['CECI', "N'EST", 'PAS', 'UNE', 'PIPE'],
         );
       });
 
@@ -917,7 +917,7 @@
     describe('27. Capitalize first letter of words in array', () => {
       it('should return an array', () => {
         expect(
-          Array.isArray(capitalizeFirst(['i', 'am', 'learning', 'recursion']))
+          Array.isArray(capitalizeFirst(['i', 'am', 'learning', 'recursion'])),
         ).to.equal(true);
       });
 
@@ -929,7 +929,7 @@
           'Recursion',
         ]);
         expect(capitalizeFirst(['ceci', "n'est", 'pas', 'une', 'pipe'])).to.eql(
-          ['Ceci', "N'est", 'Pas', 'Une', 'Pipe']
+          ['Ceci', "N'est", 'Pas', 'Une', 'Pipe'],
         );
       });
 
@@ -1045,7 +1045,7 @@
     xdescribe('32. Augment each element in nested arrays', () => {
       it('should return an array', () => {
         expect(Array.isArray(augmentElements([[], [3], [7]], 5))).to.equal(
-          true
+          true,
         );
       });
 
@@ -1123,16 +1123,16 @@
     describe('35. Convert numbers to text', () => {
       it('should return a string', () => {
         expect(typeof numToText('I have 5 dogs and 6 ponies')).to.equal(
-          'string'
+          'string',
         );
       });
 
       it('should convert single digits to their word equivalent', () => {
         expect(numToText('I have 5 dogs and 6 ponies')).to.eql(
-          'I have five dogs and six ponies'
+          'I have five dogs and six ponies',
         );
         expect(numToText('It takes 3 men to screw in 1 light bulb')).to.eql(
-          'It takes three men to screw in one light bulb'
+          'It takes three men to screw in one light bulb',
         );
       });
 
