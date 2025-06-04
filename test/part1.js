@@ -778,4 +778,8 @@
       expect(Array.prototype.map.called).to.equal(false);
     });
   }
+
+  function doSomething(value){
+    return value;
+  }
 })();
